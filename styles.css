@@ -1,0 +1,18 @@
+h1 {
+    color: rgb(50,170,140);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+}
+
+p {
+    color: rgb(20,120,180);
+    font-family: Arial, Helvetica, sans-serif;
+    
+}
+
+#para1 {
+    color:brown;
+}
+.class1 {
+    color:coral;
+}

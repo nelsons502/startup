@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8" />
+    <!-- Tell browsers not to scale the viewport automatically -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LongboardLinks</title>
+    <link rel="icon" href="LetterL.svg.ico" />
+</head>
+<body>
+    <link rel="stylesheet" href="styles.css"/>
+    <header>
+        <h1>Welcome to LongboardLinks!</h1>
+
+        <p>This is the place to meet up with friends and board around town, using your favorite<br>
+            mode of transportation, be it scooter, skateboard, roller blades, or something else.
+        </p>
+        
+        <nav>
+            <menu>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="create.html">Create</a></li>
+                <li><a href="posts.html">Posts</a></li>
+            </menu>
+        </nav>
+    </header>
+    <body>
+        <h1>Create an event!</h1>
+        <p style="color:red">Create an event below</p>
+
+        <form method="get" action="events.html">
+            <lable for="event_name">Event name</lable>
+            <input type="text" id="event_name" placeholder="Event name"/>
+            <label for="event_date">Date</label>
+            <input type="date" id="event_date" name="event_date">
+            <label for="event_time">Time</label>
+            <input type="time" id="event_time" name="event_time">
+            <button type="submit">Create</button>
+        </form>
+    </body>
+    
+    <footer>
+        <p><a href="https://github.com/nelsons502/cs260-byu.git">GitHub</a></p>
+    </footer>
+
+</body>
