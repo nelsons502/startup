@@ -4,6 +4,10 @@ h1 {
     text-align: center;
 }
 
+img {
+    align-items:start;
+}
+
 p {
     color: rgb(20,120,180);
     font-family: Arial, Helvetica, sans-serif;

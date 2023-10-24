@@ -46,3 +46,5 @@ I will use the required technologies in these ways.
 * __Login__ - Register and login users. Credentials securely stored in database. Can't vote unless authenticated.
 * __WebSocket__ - A "featured" longboard-related thing will be hooked up to the login page. 
 * __React__ - Application ported to use the React web framework.
+
+**For this Deliverable** I made sure to organize the header and footer of the body of each HTML file so that it would be consistent with each file. I also added images and placeholders for all the different connections to outside things (third party provider, real time data, and loaded from a database).
