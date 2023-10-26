@@ -1,42 +1,46 @@
 <!DOCTYPE html>
-<head>
-    <meta charset="UTF-8" />
-    <!-- Tell browsers not to scale the viewport automatically -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LongboardLinks</title>
-    <link rel="icon" href="LetterL.svg.ico" />
-</head>
-<body>
-    <link rel="stylesheet" href="styles.css"/>
-    <header>
-        <!--<img alt="boards" src="assets/vector-longboard.svg" width="200">-->
-        <h1>LongboardLinks!</h1>
-        
-        <nav>
-            <menu>
-                <li><a href="events.html">Events</a></li>
-                <li><a href="create.html">Create</a></li>
-                <li><a href="posts.html">Posts</a></li>
-            </menu>
-        </nav>
-    </header>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <!-- Tell browsers not to scale the viewport automatically -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>LongboardLinks</title>
+        <link rel="icon" href="LetterL.svg.ico" />
+    </head>
     <body>
-        <h1>Create an event!</h1>
-        <p style="color:red">Create an event below</p>
+        <link rel="stylesheet" href="styles.css"/>
+        <header>
+            <!--<img alt="boards" src="assets/vector-longboard.svg" width="200">-->
+            <h1>LongboardLinks!</h1>
+            
+            <nav>
+                <menu>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="create.html">Create</a></li>
+                    <li><a href="posts.html">Posts</a></li>
+                </menu>
+            </nav>
+        </header>
+        
+        <main>
+            <h1>Create an event!</h1>
+            <p style="color:red">Create an event below</p>
 
-        <form method="get" action="events.html">
-            <lable for="event_name">Event name</lable>
-            <input type="text" id="event_name" placeholder="Event name"/>
-            <label for="event_date">Date</label>
-            <input type="date" id="event_date" name="event_date">
-            <label for="event_time">Time</label>
-            <input type="time" id="event_time" name="event_time">
-            <button type="submit">Create</button>
-        </form>
+            <form method="get" action="events.html">
+                <lable for="event_name">Event name</lable>
+                <input type="text" id="event_name" placeholder="Event name"/>
+                <label for="event_date">Date</label>
+                <input type="date" id="event_date" name="event_date">
+                <label for="event_time">Time</label>
+                <input type="time" id="event_time" name="event_time">
+                <button type="submit">Create</button>
+            </form>
+        </main>
+
     </body>
-    
+
     <footer>
+        <p><a href="about.html">About</a></p>
         <p><a href="https://github.com/nelsons502/startup.git">GitHub</a></p>
     </footer>
-
-</body>
+</html>
