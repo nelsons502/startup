@@ -7,25 +7,32 @@
         <title>LongboardLinks</title>
         <link rel="icon" href="assests/LetterL.svg.ico" />
     </head>
+
+
     <body>
         <link rel="stylesheet" href="styles.css"/>
-        <header>
-            <h1>LongboardLinks!</h1>
 
-            <p>This is the place to meet up with friends and board around town, using your favorite<br>
-                mode of transportation, be it scooter, skateboard, roller blades, or something else.
-            </p>
+        <!--Code for the header of each page. Shoudl all be identical-->
+        <header>
+            <h1 id="brand_name">LongboardLinks!</h1>
             
             <nav>
                 <menu>
+                    <li><a href="index.html">Login</a></li>
                     <li><a href="events.html">Events</a></li>
                     <li><a href="create.html">Create</a></li>
                     <li><a href="posts.html">Posts</a></li>
+                    <li><a href="about.html">About</a></li>
                 </menu>
             </nav>
         </header>
 
+
+        <!--Code for the body of each page. Shoud all be a bit different with similarities-->
         <main>
+            <p>This is the place to meet up with friends and board around town, using your favorite<br>
+                mode of transportation, be it scooter, skateboard, roller blades, or something else.
+            </p>
             <p id="para1">Login to see/create events</p>
             <form method="get" action="events.html">
                 <lable for="username">Userame</lable>
@@ -38,12 +45,13 @@
             <p>**Third party socket here**</p>
         </main>
 
-    </body>
 
-    <footer>
-        <p></p><a href="about.html">About</a></p>
-        <p><a href="https://github.com/nelsons502/startup.git">GitHub</a></p>
-    </footer>
+        <!--Code for the footer of each page. Shoudl all be identical-->
+        <footer>
+            <p><a href="https://github.com/nelsons502/startup.git">GitHub</a></p>
+        </footer>
+
+    </body>
     
 
 </html>
