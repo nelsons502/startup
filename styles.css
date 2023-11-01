@@ -64,6 +64,10 @@ h1 {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
 }
+h2 {
+    color: rgb(200,150,20);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
 p {
     color: rgb(20,120,180);
