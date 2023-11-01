@@ -1,9 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400&family=Young+Serif&display=swap");
 
-
-
 body{
-    font-family: sans-serif;
+    font-family: Nuito;
     display: flex;
     flex-direction: column;
     margin: 0;
@@ -16,26 +14,31 @@ header{
     color: darkorange;
     
     display: flex;
-    flex: 0 50px;
-    flex-direction: column;
+    flex: 0;
+    flex-direction: row;
     justify-content: start;
     align-items: center;
 }
 
 nav {
-    display: flex;
-    flex-direction: row;
+    text-align: center;
+    justify-content: center;
     align-items: center;
 }
 
 menu {
+    margin: 0;
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    font-family: sans-serif;
 }
 
 li {
-    padding: 0.5em;
+    list-style: none;
+    padding-left: 1em;
 }
 
 main{
@@ -55,14 +58,8 @@ footer{
 }
 
 h1 {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-
     color: rgb(200,150,20);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-align: center;
 }
 h2 {
     color: rgb(200,150,20);
@@ -71,7 +68,7 @@ h2 {
 
 p {
     color: rgb(20,120,180);
-    font-family: Nunito;
+    font-family: sans-serif;
 }
 
 #para1 {
@@ -80,4 +77,13 @@ p {
 
 .class1 {
     color:coral;
+}
+
+@media (orientation:portrait) {
+    .brand-name {
+        display: none;
+    }
+    menu {
+        flex-direction: column;
+    }
 }

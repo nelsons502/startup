@@ -6,6 +6,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>LongboardLinks</title>
         <link rel="icon" href="assests/LetterL.svg.ico" />
+        
+        <!-- Include bootstrap CSS framework -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+            crossorigin="anonymous"
+        />
     </head>
 
 
@@ -14,15 +22,15 @@
 
         <!--Code for the header of each page. Shoudl all be identical-->
         <header>
-            <h1 id="brand_name">LongboardLinks!</h1>
-            
+
+            <h1 class="brand-name">LongboardLinks</h1>
             <nav>
                 <menu>
-                    <li><a href="index.html">Login</a></li>
-                    <li><a href="events.html">Events</a></li>
-                    <li><a href="create.html">Create</a></li>
-                    <li><a href="posts.html">Posts</a></li>
-                    <li><a href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
+                    <li class="nav-item"><a class="nav-link" href="create.html">Create</a></li>
+                    <li class="nav-item"><a class="nav-link" href="posts.html">Posts</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
                 </menu>
             </nav>
         </header>
@@ -34,7 +42,7 @@
             <p>This is the place to meet up with friends and board around town, using your favorite<br>
                 mode of transportation, be it scooter, skateboard, roller blades, or something else.
             </p>
-            <p id="para1">Login to see/create events</p>
+            <p id="para1">Login to see/create events and posts</p>
             <form method="get" action="events.html">
                 <lable for="username">Userame</lable>
                 <input type="text" id="username" placeholder="username"/>

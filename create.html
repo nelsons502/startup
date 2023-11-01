@@ -5,25 +5,36 @@
         <!-- Tell browsers not to scale the viewport automatically -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>LongboardLinks</title>
-        <link rel="icon" href="LetterL.svg.ico" />
+        <link rel="icon" href="assests/LetterL.svg.ico" />
+        
+        <!-- Include bootstrap CSS framework -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+            crossorigin="anonymous"
+        />
     </head>
+
+
     <body>
         <link rel="stylesheet" href="styles.css"/>
 
         <!--Code for the header of each page. Shoudl all be identical-->
         <header>
-            <h1>LongboardLinks!</h1>
-            
+
+            <h1 class="brand-name">LongboardLinks</h1>
             <nav>
                 <menu>
-                    <li><a href="index.html">Login</a></li>
-                    <li><a href="events.html">Events</a></li>
-                    <li><a href="create.html">Create</a></li>
-                    <li><a href="posts.html">Posts</a></li>
-                    <li><a href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
+                    <li class="nav-item"><a class="nav-link" href="create.html">Create</a></li>
+                    <li class="nav-item"><a class="nav-link" href="posts.html">Posts</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
                 </menu>
             </nav>
         </header>
+
         
 
         <!--Code for the body of each page. Shoud all be a bit different with similarities-->
