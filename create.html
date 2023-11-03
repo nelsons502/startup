@@ -40,7 +40,7 @@
         <!--Code for the body of each page. Shoud all be a bit different with similarities-->
         <main>
             <h2>Create an event!</h2>
-            <p style="color:red">Create an event below</p>
+            <p>Create an event below</p>
 
             <form method="get" action="events.html">
                 <lable for="event_name">Event name</lable>
@@ -49,6 +49,8 @@
                 <input type="date" id="event_date" name="event_date">
                 <label for="event_time">Time</label>
                 <input type="time" id="event_time" name="event_time">
+                <label for="event_rsvp">RSVP?</label>
+                <input type="checkbox" id="event_rsvp" name="event_rsvp">
                 <button type="submit">Create</button>
             </form>
         </main>

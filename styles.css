@@ -84,14 +84,35 @@ p {
     border-radius: 1em;
     text-align: center;
     justify-content: center;
+    color: white;
+    font-weight: 200;
+    font-family: sans-serif;
 }
 
 .card:nth-child(odd) {
-    background: hsl(220, 25%, 70%);
+    background: rgb(200,150,20);
 }
 
 .card:nth-child(even) {
-    background: hsl(420, 25%, 70%);
+    background: #118899;
+}
+
+.events {
+    margin: 1em;
+    background: rgba(200, 149, 20, 0.483);
+    width: 100vb;
+
+}
+
+.event {
+    margin: 1em;
+    padding: 1em;
+    background: lightblue;
+    border: thick teal solid;
+    color: #118899;
+    font-family: sans-serif;
+    font-weight: bold;
+
 }
 
 
