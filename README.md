@@ -47,4 +47,12 @@ I will use the required technologies in these ways.
 * __WebSocket__ - A "featured" longboard-related thing will be hooked up to the login page. 
 * __React__ - Application ported to use the React web framework.
 
-**For this Deliverable** I made sure to organize the header and footer of the body of each HTML file so that it would be consistent with each file. I also added images and placeholders for all the different connections to outside things (third party provider, real time data, and loaded from a database).
+
+# Notes on deliverables!!!
+**For HTML Deliverable** I made sure to organize the header and footer of the body of each HTML file so that it would be consistent with each file. I also added images and placeholders for all the different connections to outside things (third party provider, real time data, and loaded from a database).
+
+**For CSS deliverable** I made many modifications to the code. Here are some of the most notable things:
+* Making the header look nicer (including a much more pleasing navigation bar) and adapt to the size of the screen with a @media tag.
+* Creating a grid of "posts" that the user can view from the matching page. I used the CSS grid layout for this.
+* Creating a list of "events" for the user to view on the mathcing page. I have fun placing padding and margins on each item.
+* I also made sure to standarize the header and footer for each page so that the look would be consistent throughout the application. Fonts, use of whitespace and contrasting colors are all accounted for as well.
