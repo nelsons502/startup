@@ -45,3 +45,7 @@ Over the past 2 days I have been learning a lot about ways to format things with
 32. Can a DNS A record can point to an IP address or another A record.
 33. Port 443, 80, 22 is reserved for which protocol?
 34. What will the following code using Promises output when executed?
+
+### 11/11/23
+I just learned how to make functions in JavaScript that rearrange data and that are called when an HTML element is clicked. It's a pretty intuitive language, if I'm being honest. I am excited to get some more experience with it, since I just need more exposure.
+
