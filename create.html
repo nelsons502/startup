@@ -14,12 +14,14 @@
             integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
             crossorigin="anonymous"
         />
+
+        <link rel="stylesheet" href="styles.css"/>
+
+        <script src="events.js"></script>
     </head>
 
 
     <body>
-        <link rel="stylesheet" href="styles.css"/>
-
         <!--Code for the header of each page. Shoudl all be identical-->
         <header>
 
@@ -42,8 +44,21 @@
             <h2>Create an event!</h2>
             <p>Create an event below</p>
 
-            <form method="get" action="events.html">
-                <lable for="event_name">Event name</lable>
+            <div id="create-event">
+                <label for="event-name">Event name</label>
+                <input type="text" id="event-name" placeholder="Event name"/>
+                <label for="event-date">Date</label>
+                <input type="date" id="event-date">
+                <label for="event-time">Time</label>
+                <input type="time" id="event-time">
+                <label for="event-rsvp">RSVP?</label>
+                <input type="checkbox" id="event-rsvp">
+                <button onclick="createNewEvent()">Create</button>
+            </div>
+            
+            <!--
+            <form method="post" action="events.html">
+                <label for="event_name">Event name</label>
                 <input type="text" id="event_name" placeholder="Event name"/>
                 <label for="event_date">Date</label>
                 <input type="date" id="event_date" name="event_date">
@@ -51,8 +66,11 @@
                 <input type="time" id="event_time" name="event_time">
                 <label for="event_rsvp">RSVP?</label>
                 <input type="checkbox" id="event_rsvp" name="event_rsvp">
-                <button type="submit">Create</button>
+                <button type="submit" onclick="Event()">Create</button>
             </form>
+            -->
+            
+            
         </main>
 
         <!--Code for the footer of each page. Shoudl all be identical-->

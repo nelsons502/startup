@@ -45,13 +45,24 @@
                 mode of transportation, be it scooter, skateboard, roller blades, or something else.
             </p>
             <p id="para1">Login to see/create events and posts</p>
-            <form method="get" action="events.html">
+
+            <div id="login-div">
                 <lable for="username">Userame</lable>
-                <input type="text" id="username" placeholder="username"/>
+                <input type="text" id="username-slot" placeholder="username"/>
                 <lable for="password">Password</lable>
-                <input type="text" id="password" placeholder="password"/>
+                <input type="password" id="password-slot" placeholder="password"/>
+                <button onclick="login()">Login</button>
+            </div>
+
+            <!--
+            <form method="post" action="events.html" id="login-form">
+                <lable for="username">Userame</lable>
+                <input type="text" id="username-slot" placeholder="username"/>
+                <lable for="password">Password</lable>
+                <input type="password" id="password-slot" placeholder="password"/>
                 <button type="submit" onclick="login()">Login</button>
             </form>
+            -->
             <p class="class1">You can also see recent posts from users on the "Posts" page</p>
             <p>**Third party socket here**</p>
         </main>
