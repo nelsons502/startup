@@ -14,6 +14,8 @@
             integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
             crossorigin="anonymous"
         />
+
+        <script src="webSocket.js"></script>
     </head>
 
 
@@ -44,6 +46,7 @@
                 who use other forms of transportation on campus other than their feet or a motor vehicle. </p>
             <p>Here you can find and create boarding events in and near Provo, UT. You can also post pictures 
                 of yourself and your buddies enjoying time together on your boards.</p>
+            <p class="total-rsvps" id="total-rsvps"></p>
             <p>LongboardLinks is created, run, and maintained by <b>Nelson Schnepf</b>. 
                 Feel free to contact him at <b>nmschnepf@gmail.com!</b></p>
         </main>
@@ -52,5 +55,12 @@
         <footer>
             <p><a style="color: aliceblue;" href="https://github.com/nelsons502/startup.git">GitHub</a></p>
         </footer>
+
+        <script>
+            // Call the function when the page loads
+            window.onload = function() {
+                loadTotalRSVPs();
+            };
+        </script>
     </body>
 </html>

@@ -120,8 +120,12 @@ function populateEventsList() {
         rsvpLabel.className = 'rsvp-label';
         rsvpLabel.textContent = `RSVP: ${event.rsvpCount}`;
         rsvpCheckbox.addEventListener('change', function() {
+            const storedRSVPs = localStorage.getItem('totalRSVPs');
+            let totalRSVPs = storedRSVPs ? JSON.parse(storedRSVPs) : 0; 
             // Update the RSVP count based on checkbox state
             event.rsvpCount += this.checked ? 1 : -1;
+            totalRSVPs += this.checked ? 1 : -1;
+            localStorage.setItem('totalRSVPs', JSON.stringify(totalRSVPs));
             // Display the updated count
             rsvpLabel.textContent = `RSVP: ${event.rsvpCount}`;
         });
