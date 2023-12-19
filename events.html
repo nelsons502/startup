@@ -14,12 +14,14 @@
             integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
             crossorigin="anonymous"
         />
+
+        <link rel="stylesheet" href="styles.css"/>
+
+        <script src="events.js"></script>
     </head>
 
 
     <body>
-        <link rel="stylesheet" href="styles.css"/>
-
         <!--Code for the header of each page. Shoudl all be identical-->
         <header>
 
@@ -44,22 +46,23 @@
             <p>This will be a list (scrollable) of all the recent posts, accessed from a database</p>
             <p>This will have a REAL TIME count of how many people have reported they will attend the event</p>
 
-            <ol class="events">
-                <li class="event">Event1</li>
-                <li class="event">Event2</li>
-                <li class="event">Event3</li>
-                <li class="event">Event4</li>
-                <li class="event">Event5</li>
-                <li class="event">Event6</li>
-                <li class="event">Event7</li>
-                <li class="event">Event8</li>
-                <li class="event">Etc</li>
+
+            <ol id="events-list" class="events">
+                <!-- Events will be dynamically added here -->
             </ol>
+        
         </main>
         
         <!--Code for the footer of each page. Shoudl all be identical-->
         <footer>
             <p><a style="color: aliceblue;" href="https://github.com/nelsons502/startup.git">GitHub</a></p>
         </footer>
+
+        <script>
+            // Call the function when the page loads
+            window.onload = function() {
+                populateEventsList();
+            };
+        </script>
     </body>
 </html>

@@ -101,9 +101,9 @@ p {
     margin: 1em;
     background: rgba(200, 149, 20, 0.483);
     width: 100vb;
-
+    display: flex;
+    flex-direction: column;
 }
-
 .event {
     margin: 1em;
     padding: 1em;
@@ -112,7 +112,34 @@ p {
     color: #118899;
     font-family: sans-serif;
     font-weight: bold;
-
+    display: flex;
+    flex-direction: column;
+}
+.event-name {
+    font-size:2em;
+    font-weight: bold;
+    color: rgb(200,150,20);
+    
+}
+.event-date-and-time {
+    display: flex;
+    flex-direction: row;
+    
+}
+.event-date {
+    flex: 2;
+    padding: 1em;
+}
+.event-time {
+    flex: 2;
+    padding: 1em
+}
+.rsvp-checkbox {
+    flex: 0.1;
+}
+.rsvp-label {
+    flex: 1;
+    padding: 1em;
 }
 
 
