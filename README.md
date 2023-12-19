@@ -56,3 +56,11 @@ I will use the required technologies in these ways.
 * Creating a grid of "posts" that the user can view from the matching page. I used the CSS grid layout for this.
 * Creating a list of "events" for the user to view on the mathcing page. I have fun placing padding and margins on each item.
 * I also made sure to standarize the header and footer for each page so that the look would be consistent throughout the application. Fonts, use of whitespace and contrasting colors are all accounted for as well.
+
+**For JS Deliverable** I added three files of JS code.
+* I made the login code for the future login ability. 
+* I made code for an Event class and an EventList class. These use local storage to keep track of the events that have been created so far. This will be updated to a database access.
+  * the events.js file interacts with both the events.html file and the create.html file.
+* The webSocket.js file is reporting on the total number of users who have rsvped to an event. I will make this my webSocket.
+* I made several additions to the styles.css file to help make the events look a bit better. 
+* The Posts page has not been modified. I will most likely delete it from the project due to time constraints.
