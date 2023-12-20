@@ -1,3 +1,5 @@
+//const { cursorTo } = require("readline");
+
 class Event {
     constructor(name, date, time, rspv=false) {
         this.name = name;
@@ -15,10 +17,45 @@ class Event {
 
 class EventList {
     constructor() {
-        // Check if events are already stored in local storage
-        const storedEvents = localStorage.getItem('events');
-        this.list = storedEvents ? JSON.parse(storedEvents) : [];
+      // Initialize the list as an empty array
+      this.list = [];
+  
+      // Load events asynchronously
+      this.loadEvents()
+        .then(() => {
+          // Sort events after loading
+          this.sortEvents();
+          // Do any other initialization if needed
+        })
+        .catch(error => {
+          console.error('Error initializing events:', error);
+        });
     }
+  
+    async loadEvents() {
+      try {
+        const response = await fetch('/api/events');
+        const responseEvents = await response.json(); // TODO problem is HEREish!!!!
+        this.list = responseEvents ?? [];
+        localStorage.setItem('events', JSON.stringify(this.list));
+      } catch (error) {
+        console.error('Error loading events:', error);
+        const eventsText = localStorage.getItem('events');
+        if (eventsText) {
+          this.list = JSON.parse(eventsText);
+        }
+      }
+    }
+  
+    sortEvents() {
+      // Sort the events
+      this.list.sort((a, b) => {
+        const dateA = new Date(`${a.date} ${a.time}`);
+        const dateB = new Date(`${b.date} ${b.time}`);
+        return dateA - dateB;
+      });
+    }  
+      
 
     addEvent(event) {
         this.list.push(event);
@@ -32,9 +69,9 @@ class EventList {
     }
 
     removeEvent(eventToRemove) {
-        this.list.filter(event => event !== eventToRemove);
-        this.list.saveToLocalStorage();
-    }
+        this.list = this.list.filter(event => event !== eventToRemove);
+        this.saveToLocalStorage();
+      }      
 
     // Function to save events to local storage
     saveToLocalStorage() {
@@ -66,15 +103,8 @@ function createNewEvent() {
 function populateEventsList() {
     const eventsListElement = document.getElementById('events-list');
 
-    // sort the events
-    events.list.sort((a, b) => {
-        const dateA = new Date(`${a.date} ${a.time}`);
-        const dateB = new Date(`${b.date} ${b.time}`);
-        return dateA - dateB;
-    });
-
     // Clear existing list items
-    eventsListElement.innerHTML = '';
+    eventsListElement.textContent = '';
 
     // Iterate over the events array and add each event to the list
     events.list.forEach(event => {
