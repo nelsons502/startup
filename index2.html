@@ -1,0 +1,10 @@
+<body>
+    <p id="welcome" data-testid="msg">Hello world</p>
+    <button onclick="changeWelcome()">change welcome</button>
+    <script>
+      function changeWelcome() {
+        const welcomeEl = document.querySelector('#welcome');
+        welcomeEl.textContent = 'I feel welcomed';
+      }
+    </script>
+  </body>

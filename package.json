@@ -1,0 +1,14 @@
+{
+  "name": "startup",
+  "version": "1.0.0",
+  "description": "Part of this inspiration comes from the Spikeball app, which allows players  to meet up and see what events are going on near them",
+  "main": "events.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.40.1",
+    "@types/node": "^20.10.5"
+  }
+}
