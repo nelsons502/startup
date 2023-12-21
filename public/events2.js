@@ -1,33 +1,100 @@
-async function loadEvents() {
-    let events = [];
+//const { cursorTo } = require("readline");
 
-    try {
-        // Get the current list of events from the service
+class Event {
+    constructor(name, date, time, rspv=false) {
+        this.name = name;
+        this.date = date;
+        this.time = time;
+        this.rsvp = rspv;
+        this.rsvpCount = 0;
+        this.print();
+    }
+
+    print() {
+        console.log(this.name, this.date, this.time, this.rsvpCount);
+    }
+}
+
+class EventList {
+    constructor() {
+      // Initialize the list as an empty array
+      this.list = [];
+  
+      // Load events asynchronously
+      this.loadEvents()
+        .then(() => {
+          // Sort events after loading
+          this.sortEvents();
+          populateEventsList();
+          // Do any other initialization if needed
+        })
+        .catch(error => {
+          console.error('Error initializing events:', error);
+        });
+    }
+  
+    async loadEvents() {
+      try {
         const response = await fetch('/api/events');
-        events = await response.json();
+        const responseEvents = await response.json(); // TODO problem is HEREish!!!!
+        this.list = responseEvents ?? [];
+        localStorage.setItem('events', JSON.stringify(this.list));
 
-        // Save the events in case we go offline in the future
-        localStorage.setItem('events', JSON.stringify(events));
-    } catch {
-        // If there was an error then just use the last saved events
+      } catch (error) {
+        console.error('Error loading events:', error);
         const eventsText = localStorage.getItem('events');
         if (eventsText) {
-            events = JSON.parse(eventsText);
+          this.list = JSON.parse(eventsText);
         }
+      }
     }
-    sortEvents(events);
-    populateEventsList(events);
+  
+    sortEvents() {
+      // Sort the events
+      this.list.sort((a, b) => {
+        const dateA = new Date(`${a.date} ${a.time}`);
+        const dateB = new Date(`${b.date} ${b.time}`);
+        return dateA - dateB;
+      });
+    }  
+      
 
+    addEvent(event) {
+        // have the api update its own events list
+        fetch(`/api/event`,{
+            method: 'POST',
+            body: JSON.stringify(event),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+            })
+            .then((response) => response.json())
+            .then((jsonResponse) => {
+                console.log(jsonResponse);
+        });
+
+        // Update local storage when adding a new event
+        this.list.push(event);
+        this.saveToLocalStorage();
+    }
+
+    clearAllEvents() { // only to be used by admin
+        this.list = [];
+        this.saveToLocalStorage();
+    }
+
+    removeEvent(eventToRemove) {
+        this.list = this.list.filter(event => event !== eventToRemove);
+        this.saveToLocalStorage();
+      }      
+
+    // Function to save events to local storage
+    saveToLocalStorage() {
+        localStorage.setItem('events', JSON.stringify(this.list));
+    }
 }
 
-function sortEvents(events) {
-    // Sort the events
-    events.sort((a, b) => {
-      const dateA = new Date(`${a.date} ${a.time}`);
-      const dateB = new Date(`${b.date} ${b.time}`);
-      return dateA - dateB;
-    });
-}
+let events = new EventList();
 
 // Function to dynamically populate the events list
 function populateEventsList() {
@@ -101,5 +168,3 @@ function checkForRSVP(event, rsvpLabel) {
     // Display the updated count
     rsvpLabel.textContent = `RSVP: ${event.rsvpCount}`;
 }
-
-loadEvents();

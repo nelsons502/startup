@@ -58,6 +58,9 @@ function updateEvents(newEvent, events) {
   if (!found) {
     events.push(newEvent);
   }
+  else {
+    console.log('it looks like that event already exists');
+  }
 
   return events;
 }
