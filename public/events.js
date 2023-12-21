@@ -30,14 +30,14 @@ function sortEvents(events) {
 }
 
 // Function to dynamically populate the events list
-function populateEventsList() {
+function populateEventsList(events) {
     const eventsListElement = document.getElementById('events-list');
 
     // Clear existing list items
     eventsListElement.textContent = '';
 
     // Iterate over the events array and add each event to the list
-    events.list.forEach(event => {
+    events.forEach(event => {
         const listItem = document.createElement('li');
         listItem.className = 'event';
 
@@ -92,7 +92,7 @@ function populateEventsList() {
 }
 
 function checkForRSVP(event, rsvpLabel) {
-    const storedRSVPs = localStorage.getItem('totalRSVPs');
+    let storedRSVPs = localStorage.getItem('totalRSVPs');
     let totalRSVPs = storedRSVPs ? JSON.parse(storedRSVPs) : 0; 
     // Update the RSVP count based on checkbox state
     event.rsvpCount += this.checked ? 1 : -1;

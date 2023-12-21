@@ -38,10 +38,6 @@ async function addEvent(event) {
         })
         .then((response) => response.json())
         .then((jsonResponse) => {
-            console.log(jsonResponse);
+            console.log('Event addded to front-end list' + jsonResponse.stringify());
     });
-
-    // Update local storage when adding a new event
-    this.list.push(event);
-    this.saveToLocalStorage();
 }
