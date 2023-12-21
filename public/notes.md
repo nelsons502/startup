@@ -54,13 +54,41 @@ I just learned how to make functions in JavaScript that rearrange data and that 
 # _Study Guide for Final Exam_
 
 1. What ports are used for HTTP, HTTPS, SSH?
-
+HTTP: Port 80
+HTTPS: Port 443
+SSH: Port 22
 
 2. What do HTTP status codes in the 300, 400, 500 range indicate?
-
+300 Range (Redirection)
+      - 300 Multiple Choices: Indicates multiple options for the resource that the client may follow.
+      - 301 Moved Permanently: The requested resource has been permanently moved to a new location, and the client should update its URL to the new one.
+      - 302 Found (or Moved Temporarily): Similar to 301, but indicates a temporary redirect. The client should continue to use the original URL.
+      - 304 Not Modified: Used in response to conditional requests (e.g., using the If-Modified-Since header) to indicate that the resource has not been modified since the specified date.
+400 Range (Client Errors)
+      - 400 Bad Request: The server cannot process the request due to a client error, such as malformed syntax or invalid request message framing.
+      - 401 Unauthorized: Similar to 403, but specifically indicates that authentication is required and has failed or has not been provided.
+      - 403 Forbidden: The client does not have permission to access the requested resource.
+      - 404 Not Found: The requested resource could not be found on the server.
+500 Range (Server Errors)
+      - 500 Internal Server Error: A generic error message indicating that an unexpected condition was encountered on the server.
+      - 501 Not Implemented: The server does not support the functionality required to fulfill the request.
+      - 502 Bad Gateway: The server, while acting as a gateway or proxy, received an invalid response from an upstream server.
+      - 503 Service Unavailable: The server is currently unable to handle the request due to temporary overloading or maintenance of the server.
 
 3. What does the HTTP header content-type allows you to do?
+The Content-Type HTTP header allows the sender to indicate the media type (or MIME type) of the resource being sent in the HTTP message body.
 
+The Content-Type header is specified in the HTTP response when a server sends data to a client, and it can also be used in the request to specify the media type of the data the client is sending to the server.
+
+Common Content-Type values include:
+text/html: HTML documents
+text/plain: Plain text
+application/json: JSON (JavaScript Object Notation) data
+application/xml: XML (eXtensible Markup Language) data
+image/jpeg: JPEG image
+image/png: PNG image
+application/pdf: PDF document
+multipart/form-data: Used in HTML forms that include binary data, such as file uploads
 
 4. What do the following attributes of a cookie do?
 - Domain
