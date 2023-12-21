@@ -40,4 +40,5 @@ async function addEvent(event) {
         .then((jsonResponse) => {
             console.log('Event addded to front-end list' + jsonResponse.stringify());
     });
+    //window.location.href = 'events.html';
 }

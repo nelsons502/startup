@@ -1,29 +1,32 @@
-function displayQuote(data) {
-    fetch('https://api.quotable.io/random')
-      .then((response) => response.json())
-      .then((data) => {
-        const containerEl = document.querySelector('#quote');
-  
-        const quoteEl = document.createElement('p');
-        quoteEl.classList.add('quote');
-        const authorEl = document.createElement('p');
-        authorEl.classList.add('author');
-  
-        quoteEl.textContent = data.content;
-        authorEl.textContent = data.author;
-  
-        containerEl.appendChild(quoteEl);
-        containerEl.appendChild(authorEl);
-      });
+function getJoke(data) {
+  fetch('https://official-joke-api.appspot.com/jokes/random')
+    .then((response) => response.json())
+    .then((data) => {
+      const containerEl = document.querySelector('#joke');
+
+      const setupEl = document.createElement('p');
+      setupEl.classList.add('setup');
+      setupEl.textContent = data.setup;
+
+      const punchLineEl = document.createElement('p');
+      punchLineEl.classList.add('punchline');
+      punchLineEl.textContent = data.punchline;
+
+      containerEl.appendChild(setupEl);
+      containerEl.appendChild(punchLineEl);
+    });
 }
 
 function loadTotalRSVPs() {
-    const storedRSVPs = localStorage.getItem('totalRSVPs');
-    let totalRSVPs = storedRSVPs ? JSON.parse(storedRSVPs) : 0; 
+  console.log('about to get the totalRSVPs');
+  const storedRSVPs = localStorage.getItem('totalRSVPs');
+  let totalRSVPs = storedRSVPs ? JSON.parse(storedRSVPs) : 0; 
 
-    const totalSlot = document.getElementById('total-rsvps');
-    totalSlot.innerText = `The total number of RSVPs we have gotten from our users is ${totalRSVPs}`;
+  const totalSpan = document.getElementById('rsvps');
+  totalSpan.innerText = totalRSVPs;
 }
 
-displayQuote();
-loadTotalRSVPs();
+getJoke();
+//loadTotalRSVPs();
+
+console.log('in about.js');
