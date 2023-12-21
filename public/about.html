@@ -15,7 +15,7 @@
             crossorigin="anonymous"
         />
 
-        <script src="webSocket.js"></script>
+        <script src="about.js"></script>
     </head>
 
 
@@ -44,11 +44,15 @@
             <h2>About Us</h2>
             <p>LongboardLinks was created to bring together students at Brigham Young University 
                 who use other forms of transportation on campus other than their feet or a motor vehicle. </p>
-            <p>Here you can find and create boarding events in and near Provo, UT. You can also post pictures 
-                of yourself and your buddies enjoying time together on your boards.</p>
+            <!---<p>Here you can find and create boarding events in and near Provo, UT. You can also post pictures 
+                of yourself and your buddies enjoying time together on your boards.</p>-->
+
             <p class="total-rsvps" id="total-rsvps"></p>
+
             <p>LongboardLinks is created, run, and maintained by <b>Nelson Schnepf</b>. 
                 Feel free to contact him at <b>nmschnepf@gmail.com!</b></p>
+
+            <div id="quote" class="quote-box bg-light text-dark"></div>
         </main>
 
         <!--Code for the footer of each page. Shoudl all be identical-->
@@ -56,11 +60,5 @@
             <p><a style="color: aliceblue;" href="https://github.com/nelsons502/startup.git">GitHub</a></p>
         </footer>
 
-        <script>
-            // Call the function when the page loads
-            window.onload = function() {
-                loadTotalRSVPs();
-            };
-        </script>
     </body>
 </html>

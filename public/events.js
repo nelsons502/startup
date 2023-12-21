@@ -38,6 +38,7 @@ class EventList {
         const responseEvents = await response.json(); // TODO problem is HEREish!!!!
         this.list = responseEvents ?? [];
         localStorage.setItem('events', JSON.stringify(this.list));
+
       } catch (error) {
         console.error('Error loading events:', error);
         const eventsText = localStorage.getItem('events');
@@ -58,8 +59,21 @@ class EventList {
       
 
     addEvent(event) {
-        this.list.push(event);
+        // have the api update its own events list
+        fetch(`/api/event`,{
+            method: 'POST',
+            body: JSON.stringify(event),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+            })
+            .then((response) => response.json())
+            .then((jsonResponse) => {
+                console.log(jsonResponse);
+        });
+
         // Update local storage when adding a new event
+        this.list.push(event);
         this.saveToLocalStorage();
     }
 
@@ -79,9 +93,7 @@ class EventList {
     }
 }
 
-
-const events = new EventList();
-//events.clearAllEvents();
+let events = new EventList();
 
 function createNewEvent() {
     // Get input values
@@ -95,8 +107,6 @@ function createNewEvent() {
 
     // You can now do something with the newEvent object, like storing it in an array or sending it to a server.
     events.addEvent(newEvent);
-    window.location.href = "events.html";
-
 }
 
 // Function to dynamically populate the events list
@@ -149,16 +159,7 @@ function populateEventsList() {
         const rsvpLabel = document.createElement('label');
         rsvpLabel.className = 'rsvp-label';
         rsvpLabel.textContent = `RSVP: ${event.rsvpCount}`;
-        rsvpCheckbox.addEventListener('change', function() {
-            const storedRSVPs = localStorage.getItem('totalRSVPs');
-            let totalRSVPs = storedRSVPs ? JSON.parse(storedRSVPs) : 0; 
-            // Update the RSVP count based on checkbox state
-            event.rsvpCount += this.checked ? 1 : -1;
-            totalRSVPs += this.checked ? 1 : -1;
-            localStorage.setItem('totalRSVPs', JSON.stringify(totalRSVPs));
-            // Display the updated count
-            rsvpLabel.textContent = `RSVP: ${event.rsvpCount}`;
-        });
+        rsvpCheckbox.addEventListener('change', checkForRSVP(event));
 
         dateAndTimeDiv.appendChild(rsvpLabel);
         dateAndTimeDiv.appendChild(rsvpCheckbox);
@@ -168,4 +169,15 @@ function populateEventsList() {
 
         eventsListElement.appendChild(listItem);
     });
+}
+
+function checkForRSVP(event) {
+    const storedRSVPs = localStorage.getItem('totalRSVPs');
+    let totalRSVPs = storedRSVPs ? JSON.parse(storedRSVPs) : 0; 
+    // Update the RSVP count based on checkbox state
+    event.rsvpCount += this.checked ? 1 : -1;
+    totalRSVPs += this.checked ? 1 : -1;
+    localStorage.setItem('totalRSVPs', JSON.stringify(totalRSVPs));
+    // Display the updated count
+    rsvpLabel.textContent = `RSVP: ${event.rsvpCount}`;
 }
