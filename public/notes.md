@@ -1,11 +1,11 @@
 # _Study Guide for Final Exam_
 
-1. What ports are used for HTTP, HTTPS, SSH?
+## 1. What ports are used for HTTP, HTTPS, SSH?
 HTTP: Port 80
 HTTPS: Port 443
 SSH: Port 22
 
-2. What do HTTP status codes in the 300, 400, 500 range indicate?
+## 2. What do HTTP status codes in the 300, 400, 500 range indicate?
 * 300 Range (Redirection)
   - 300 Multiple Choices: Indicates multiple options for the resource that the client may follow.
   - 301 Moved Permanently: The requested resource has been permanently moved to a new location, and the client should update its URL to the new one.
@@ -22,7 +22,7 @@ SSH: Port 22
   - 502 Bad Gateway: The server, while acting as a gateway or proxy, received an invalid response from an upstream server.
   - 503 Service Unavailable: The server is currently unable to handle the request due to temporary overloading or maintenance of the server.
 
-3. What does the HTTP header content-type allows you to do?
+## 3. What does the HTTP header content-type allows you to do?
 * The Content-Type HTTP header allows the sender to indicate the media type (or MIME type) of the resource being sent in the HTTP message body.
 
 * The Content-Type header is specified in the HTTP response when a server sends data to a client, and it can also be used in the request to specify the media type of the data the client is sending to the server.
@@ -39,7 +39,7 @@ SSH: Port 22
 
 Example: `Content-Type: text/html; charset=utf-8`
 
-4. What do the following attributes of a cookie do?
+## 4. What do the following attributes of a cookie do?
 * Domain
   - Purpose: The Domain attribute specifies the domain for which the cookie is valid. The browser sends the cookie with each HTTP request to this domain and its subdomains.
   - Example: If a cookie has the domain attribute set to ".example.com," it will be sent to "subdomain.example.com" as well as "example.com."
@@ -56,18 +56,18 @@ Example: `Content-Type: text/html; charset=utf-8`
   - Purpose: The HttpOnly attribute is a security feature that prevents client-side scripts (e.g., JavaScript) from accessing the cookie. This helps mitigate certain types of cross-site scripting (XSS) attacks where an attacker could try to steal a user's cookie using malicious scripts.
   - Example: Set-Cookie: sessionID=123; HttpOnly
 
-5. Assuming the following Express middleware, what would be the console.log output for an HTTP GET request with a URL path of /foo/bar?
+## 5. Assuming the following Express middleware, what would be the console.log output for an HTTP GET request with a URL path of /foo/bar?
 *TBD*
 
-6. Given the following Express service code: What does the following JavaScript fetch return?
+## 6. Given the following Express service code: What does the following JavaScript fetch return?
 *TBD*
 
-7. Given the following MongoDB query
+## 7. Given the following MongoDB query
 `{ cost: { $gt: 10 }, name: /fran.*/}`
 select all of the matching documents.
 * gets data if the cost field is greater than 10 and name field starts with 'fran'
 
-8. How should you store user passwords in a database?
+## 8. How should you store user passwords in a database?
 Use Hashing:
 Salt the Passwords:
 Use a Strong Key Derivation Function (KDF):
@@ -76,7 +76,7 @@ Use HTTPS:
 Implement Account Lockout and Rate Limiting:
 Regularly Update Password Hashes:
 
-9. Assuming the following Node.js service code is executing with websockets, what will be logged to the console of the web browser?
+## 9. Assuming the following Node.js service code is executing with websockets, what will be logged to the console of the web browser?
 *TBD*
 Example:
 ```js
@@ -118,7 +118,7 @@ server.listen(PORT, () => {
 });
 ```
 
-10. What is the WebSocket protocol used for?
+## 10. What is the WebSocket protocol used for?
 The WebSocket protocol is a communication protocol that provides full-duplex communication channels over a single, long-lived connection. Unlike the traditional request-response model of HTTP, where a client sends a request and waits for the server to respond, WebSocket allows for bidirectional communication, enabling both the client and the server to send messages to each other independently.
 * Real-time Web Applications:
 * Push Notifications:
@@ -129,7 +129,7 @@ The WebSocket protocol is a communication protocol that provides full-duplex com
 * Web API Development:
 * Internet of Things (IoT):
 
-11. What is JSX and how are the curly braces rendered?
+## 11. What is JSX and how are the curly braces rendered?
 JSX (JavaScript XML) is a syntax extension for JavaScript that looks similar to XML or HTML. It is commonly used with React, a JavaScript library for building user interfaces. JSX allows developers to write HTML-like code in their JavaScript files, making it more convenient to describe the structure of user interfaces.
 
 In JSX, curly braces {} are used to embed JavaScript expressions within the markup. These expressions are evaluated and the result is rendered as part of the UI.
@@ -139,7 +139,7 @@ Rendering Dynamic Content:
 Executing JavaScript Logic:
 Setting HTML Attributes Dynamically:
 
-12. Assuming a HTML document with a 
+## 12. Assuming a HTML document with a 
 `<div id="root"></div>`
 element, what content will the following React component generate?
 ```js
@@ -203,7 +203,7 @@ The final output rendered inside the HTML element with the id "root" will be:
 
 Each `<h1>` element represents a greeting to a person specified by the `name` prop in the `Welcome` components.
 
-13. Assuming a HTML document with a 
+## 13. Assuming a HTML document with a 
 `<div id="root"></div>`
 element, what content will the following React component generate?
 ```js
@@ -253,7 +253,7 @@ The final output rendered inside the HTML element with the id "root" will be an 
 
 Each list item corresponds to one of the numbers in the `numbers` array.
 
-14. What does the following React component do?
+## 14. What does the following React component do?
 ```js
 function Example() {
   // Declare a new state variable, which we'll call "count"  
@@ -301,7 +301,7 @@ Here's a breakdown of the component:
 
 This component is an example of how to use the `useState` hook to manage state in a functional component, allowing for dynamic and interactive user interfaces in React applications.
 
-15. What are React Hooks used for?
+## 15. What are React Hooks used for?
 React Hooks are functions that allow functional components to manage state, lifecycle, and side effects. They were introduced in React version 16.8 to enable developers to use state and other React features in functional components, which were previously stateless and lacked lifecycle methods.
 
 The primary purposes of React Hooks include:
@@ -360,7 +360,7 @@ The primary purposes of React Hooks include:
 
 React Hooks provide a more concise and expressive way to work with state and side effects in functional components, making it easier to write and maintain React code. They are a fundamental part of modern React development and are widely used in the React community.
 
-16. What is the useEffect hook used for?
+## 16. What is the useEffect hook used for?
 The `useEffect` hook in React is used to perform side effects in functional components. Side effects include actions such as data fetching, subscriptions, manual DOM manipulations, and other asynchronous or synchronous operations that affect the state of the component or have external consequences.
 
 The basic syntax of the `useEffect` hook is as follows:
@@ -444,7 +444,7 @@ Here are some common use cases for the `useEffect` hook:
 
 The `useEffect` hook is a crucial tool for managing side effects in React components and is a key feature in the transition from class components to functional components with hooks.
 
-17. What does this code do?
+## 17. What does this code do?
 ```js
 export default function App() {
   return (
@@ -512,7 +512,7 @@ Here's a breakdown of the code:
 
 In summary, this code sets up a simple routing structure using React Router, with nested routes and a layout component. The application renders different components based on the current route, allowing for a multi-page and organized user interface.
 
-18. What role does npm play in web development?
+## 18. What role does npm play in web development?
 npm (Node Package Manager) plays a crucial role in web development, particularly in projects that leverage Node.js for server-side or build-related tasks. Here are some key roles that npm plays in web development:
 
 1. **Package Management:**
@@ -547,7 +547,7 @@ npm (Node Package Manager) plays a crucial role in web development, particularly
 
 In summary, npm is a versatile tool that simplifies package management, facilitates the integration of third-party libraries, streamlines project initialization, and enhances the overall development workflow in web development projects based on Node.js.
 
-19. What does package.json do in a npm project?
+## 19. What does package.json do in a npm project?
 The `package.json` file is a crucial component of a Node.js/npm project. It serves several important purposes, providing metadata about the project, managing project dependencies, and defining various configurations. Here are some key functions and roles of the `package.json` file in an npm project:
 
 1. **Metadata:**
@@ -651,7 +651,7 @@ The `package.json` file is a crucial component of a Node.js/npm project. It serv
 
 The `package.json` file serves as a central configuration and metadata file for npm projects, providing a standardized way to manage dependencies, scripts, metadata, and other project-related information.
 
-20. What does the fetch function do?
+## 20. What does the fetch function do?
 The `fetch` function is a modern JavaScript API for making network requests, typically used to retrieve resources (such as data or files) from a server. It is a part of the Fetch API, which provides a more powerful and flexible alternative to the older `XMLHttpRequest`.
 
 The basic syntax of the `fetch` function is as follows:
@@ -751,7 +751,7 @@ fetch('https://api.example.com/login', options)
 
 The `fetch` function provides a modern and flexible way to work with network requests in JavaScript, and it is commonly used in web development for client-server communication. Keep in mind that the `fetch` API doesn't automatically reject HTTP error status like 404 or 500. You need to check the `ok` property of the response or handle errors explicitly in your code.
 
-21. What does node.js do?
+## 21. What does node.js do?
 Node.js is a JavaScript runtime built on the V8 JavaScript engine developed by Google. It allows developers to execute JavaScript code on the server side, outside the context of a web browser. Node.js is designed to be lightweight, efficient, and scalable, making it well-suited for building scalable network applications and server-side applications.
 
 Here are some key capabilities and functions of Node.js:
@@ -788,7 +788,7 @@ Here are some key capabilities and functions of Node.js:
 
 Node.js is a versatile and powerful runtime that has become popular for building web servers, APIs, real-time applications, and various server-side applications. Its lightweight design and efficient handling of asynchronous operations make it a compelling choice for modern web development.
 
-22. What does Vite do?
+## 22. What does Vite do?
 Vite is a build tool designed for modern web development that focuses on speed and efficiency. Developed by Evan You, the creator of Vue.js, Vite is specifically tailored for building Vue.js applications, although it can be used with other front-end frameworks as well. The name "Vite" is derived from the French word for "fast."
 
 Key features and functionalities of Vite include:
