@@ -56,7 +56,6 @@ Example: `Content-Type: text/html; charset=utf-8`
   - Purpose: The HttpOnly attribute is a security feature that prevents client-side scripts (e.g., JavaScript) from accessing the cookie. This helps mitigate certain types of cross-site scripting (XSS) attacks where an attacker could try to steal a user's cookie using malicious scripts.
   - Example: Set-Cookie: sessionID=123; HttpOnly
 
-
 5. Assuming the following Express middleware, what would be the console.log output for an HTTP GET request with a URL path of /foo/bar?
 *TBD*
 
@@ -131,7 +130,14 @@ The WebSocket protocol is a communication protocol that provides full-duplex com
 * Internet of Things (IoT):
 
 11. What is JSX and how are the curly braces rendered?
+JSX (JavaScript XML) is a syntax extension for JavaScript that looks similar to XML or HTML. It is commonly used with React, a JavaScript library for building user interfaces. JSX allows developers to write HTML-like code in their JavaScript files, making it more convenient to describe the structure of user interfaces.
 
+In JSX, curly braces {} are used to embed JavaScript expressions within the markup. These expressions are evaluated and the result is rendered as part of the UI.
+
+Embedding JavaScript Expressions:
+Rendering Dynamic Content:
+Executing JavaScript Logic:
+Setting HTML Attributes Dynamically:
 
 12. Assuming a HTML document with a 
 `<div id="root"></div>`
@@ -152,7 +158,50 @@ element, what content will the following React component generate?
       const root = ReactDOM.createRoot(document.getElementById('root'));
       root.render(<App />);
 ```
+The provided React component code defines two functional components: `Welcome` and `App`. The `App` component renders three instances of the `Welcome` component, each with a different `name` prop. The final output is then rendered into the HTML element with the id "root" using `ReactDOM.createRoot` and `root.render`.
 
+Let's break down the components and their output:
+
+1. **Welcome Component:**
+   ```js
+   function Welcome(props) {
+     return <h1>Hello, {props.name}</h1>;
+   }
+   ```
+   This component takes a `name` prop and renders an `<h1>` element with the greeting "Hello" followed by the value of the `name` prop.
+
+2. **App Component:**
+   ```js
+   function App() {
+     return (
+       <div>
+         <Welcome name="Sara" />
+         <Welcome name="Cahal" />
+         <Welcome name="Edite" />
+       </div>
+     );
+   }
+   ```
+   The `App` component renders a `<div>` element containing three instances of the `Welcome` component, each with a different `name` prop.
+
+3. **Rendering with ReactDOM.createRoot:**
+   ```js
+   const root = ReactDOM.createRoot(document.getElementById('root'));
+   root.render(<App />);
+   ```
+   The `App` component is rendered into the HTML element with the id "root" using `ReactDOM.createRoot` and `root.render`.
+
+**Final Output:**
+The final output rendered inside the HTML element with the id "root" will be:
+```html
+<div>
+  <h1>Hello, Sara</h1>
+  <h1>Hello, Cahal</h1>
+  <h1>Hello, Edite</h1>
+</div>
+```
+
+Each `<h1>` element represents a greeting to a person specified by the `name` prop in the `Welcome` components.
 
 13. Assuming a HTML document with a 
 `<div id="root"></div>`
