@@ -22,14 +22,6 @@ apiRouter.get('/events', (_req, res) => {
   res.send(events);
 });
 
-/*
-// GetScores
-apiRouter.get('/events', (_req, res) => {
-  const eventSubset = events.map(event => ({ name: event.name, date: event.date, time: event.time, rsvpCount: event.rsvpCount }));
-  res.send(eventSubset);
-});
-*/
-
 // SubmitScore
 apiRouter.post('/event', (req, res) => {
   events = updateEvents(req.body, events);
