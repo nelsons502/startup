@@ -5,7 +5,7 @@ A repo for my startup, Focused Coding
 Meet the ***Focused Coding*** online community interface! This fun, interactive website has a chatbot designed to guide young Computer Science students through challenging concepts and projects. With a clean chat interface and easy access to recent conversations for review, the bot uses natural language to clarify tough topics, provide constructive feedback on code, and offer abstract examples - all without doing the work in the student's place! Features include inspirational programming quotes refreshed via API, a project showcase to celebrate peer achievements, and a secure login for a personalized experience. It’s an application for fostering **creativity**, **community**, and **focus**!
 
 ## Diagrams
-![Image of website design]()
+![Image of website design](startup-design.png)
 
 ## More detailed description
 
@@ -21,7 +21,7 @@ The application will also include other features, such as:
 
 - A programming related inspirational quote. The page will have a refresh button to get a new quote. This will be an API call.
 
-- A page where approved projects from fellow students are posted and available for each student to check-out. This will build a sense of community as students are able to see the work their peers are completing. 
+- A page where approved projects from fellow students are posted and available for each student to check-out. This will build a sense of community as students are able to see the work their peers are completing. Students will be able to download the code from these projects, as well as "like" the post.
 
 - A login screen.
 
