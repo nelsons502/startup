@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Roulette</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="dashboard.html">My Spinners</a></li>
+                <li><a href="spinner.html">Spin</a></li>
+                <li><a href="date_ideas.html">Date Ideas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Placeholder for main content -->
+    <main>
+        <section id="login-page" style="display: none;">
+            <h1>Login or Register</h1>
+            <form id="login-form">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit">Login</button>
+                <p>Don't have an account? <a href="#">Register here</a></p>
+            </form>
+        </section>
+
+        <section id="dashboard-page" style="display: none;">
+            <h1>My Spinners</h1>
+            <div id="spinners-list">
+                <!-- Example spinner -->
+                <div class="spinner">
+                    <h2>Restaurant Roulette</h2>
+                    <p>Description: Randomly pick a restaurant.</p>
+                    <button>Edit</button>
+                    <button>Delete</button>
+                </div>
+                <!-- Add new spinner -->
+                <button id="add-spinner">+ Add New Spinner</button>
+            </div>
+        </section>
+
+        <section id="spinner-page" style="display: none;">
+            <h1>Spin: Restaurant Roulette</h1>
+            <button id="spin-button">Spin!</button>
+            <div id="result">Result: [Placeholder]</div>
+
+            <ul id="spinner-options">
+                <li>
+                    Sushi Place
+                    <button>Mark Done</button>
+                </li>
+                <li>
+                    Pizza Parlor
+                    <button>Mark Done</button>
+                </li>
+            </ul>
+        </section>
+
+        <section id="date-ideas-page" style="display: none;">
+            <h1>Date Ideas</h1>
+            <div id="date-ideas-list">
+                <div class="date-idea">
+                    <h2>Stargazing</h2>
+                    <p>Tags: Outdoor</p>
+                    <p>Rating: 4.5</p>
+                    <button>Add to Spinner</button>
+                </div>
+                <div class="date-idea">
+                    <h2>Cooking Class</h2>
+                    <p>Tags: At Home, Indoor</p>
+                    <p>Rating: 5.0</p>
+                    <button>Add to Spinner</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Date Roulette</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
