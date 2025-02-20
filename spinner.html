@@ -23,22 +23,28 @@
         <p>Select one of your custom spinners below to get started.</p>
 
         <!-- Placeholder for spinner interaction -->
-        <div class="spinner">
+        <div class="spinner-heading">
             <h2>Example Spinner</h2>
             <p>Description of the spinner goes here.</p>
             <button>Spin</button>
         </div>
-
-        <div id="spin-result">
-            <h3>Result:</h3>
-            <p>Spinner result will appear here after you spin.</p>
+        <div class="spinner-container">
+            <div class="spinner">
+                <div class="wedge" style="transform: rotate(0deg);">Date Idea 1</div>
+                <div class="wedge" style="transform: rotate(45deg);">Date Idea 2</div>
+                <div class="wedge" style="transform: rotate(90deg);">Date Idea 3</div>
+                <div class="wedge" style="transform: rotate(135deg);">Date Idea 4</div>
+            </div>
+            <button id="spin-button">Spin the Wheel!</button>
         </div>
+
+        <div id="spin-result">Result: <span id="result-text">Click the button to spin!</span></div>
     </main>
 
     <footer>
         <p>&copy; 2025 Date Roulette</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="spinner.js"></script>
 </body>
 </html>
