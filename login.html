@@ -20,20 +20,17 @@
 
     <!-- Placeholder for main content -->
     <main>
-        <h1>Welcome to Date Roulette!</h1>
-        <p>Spin the wheel to discover exciting date ideas!</p>
-        <h3>Log in or register:</h3>
-        <button id="login-button">Login</button>
-        <button id="register-button">Register</button>
-        <h3>Explore date ideas without an account:</h3>
-        <button id="explore-button">Explore Date Ideas</button>
-        <h3>How it works:</h3>
-        <ol>
-            <li>Log in or register to create your custom spinners.</li>
-            <li>Choose from a variety of date ideas.</li>
-            <li>Spin the wheel and let fate decide your next adventure!</li>
-        </ol>
-        
+        <h1>Login or Register</h1>
+        <form id="login-form">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Login</button>
+            <p>Don't have an account? <a href="#">Register here</a></p>
+        </form>
     </main>
 
     <footer>
