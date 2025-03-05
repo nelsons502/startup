@@ -1,20 +1,33 @@
 # startup
-
-A repo for my Date Roulette website.
+A repo for my startup, Focused Coding
 
 ## Elevator Pitch
-Ever have trouble coming up with a good plan for a date? Whether going on a first date or the 100th, it can be difficult to decide what to do for food, for an activity, or even which movie to pick. Your Date Roulette can help you decide what to do in just minutes! You can make custom spinners with ideas for what to do. You can save these ideas and come back to them later, improving spinners over time as you try out different ideas.
+Meet the ***Focused Coding*** online community interface! This fun, interactive website has a chatbot designed to guide young Computer Science students through challenging concepts and projects. With a clean chat interface and easy access to recent conversations for review, the bot uses natural language to clarify tough topics, provide constructive feedback on code, and offer abstract examples - all without doing the work in the student's place! Features include inspirational programming quotes refreshed via API, a project showcase to celebrate peer achievements, and a secure login for a personalized experience. It’s an application for fostering **creativity**, **community**, and **focus**!
 
 ## Diagrams
-This diagram is of my old design...
 ![Image of website design](startup-design.png)
 
 ## More detailed description
-The Dating Roulette site will let users create accounts and save their date ideas to their profile. They can then form "spinners" out of those ideas which make random selection very easy. While there is a limited number of spinners one can make, the number of ideas one can have saved on their account has no prescribed limit. In addition to having their own ideas and spinners, there will be a feed of ideas that other users have submitted to the public "pool" of date ideas. Users can grad those ideas and add them to their own date idea "library."
+
+This will be a fun, AI chatbot meant to interact with young Computer Science students. The chat feature will have a main portion with the current chat, as well as the most recent chats available to click on at the side of the screen. These old chats will be for examination only, not meant to continue the conversation with the bot.
+
+The chatbot will be prompted to respond to questions the student has about CS, helping him/her understand any topics that may be confusing, or that he/she needs more practice with.
+
+The bot will avoid giving a student code to complete his/her projects, opting to instead use natural language to guide the student's programming, reviewing and giving comments on code the student has written, and, in cases where these strategies are not enough, providing abstract code examples of the topic in question.
+
+The purpose of this bot is to help provide young CS students with 24-7 access to a "tutor" who can help them with homework and/or personal projects. The bot will challenge students to apply their budding skills by answering questions and guiding without doing any of the work for the student.
+
+The application will also include other features, such as:
+
+- A programming related inspirational quote. The page will have a refresh button to get a new quote. This will be an API call.
+
+- A page where approved projects from fellow students are posted and available for each student to check-out. This will build a sense of community as students are able to see the work their peers are completing. Students will be able to download the code from these projects, as well as "like" the post.
+
+- A login screen.
+
 
 ## Technologies I will use:
-... needs updating ...
-- **HTML** - Uses correct HTML structure for application. Four HTML pages. One for login, one for displaying spinners and idea library, one for viewing ideas in the communal "pot", and one for viewing and spinning one of your own spinners.
+- **HTML** - Uses correct HTML structure for application. Four HTML pages. One for login, one for chatting with the bot, one for viewing recent posts of students' projects, and one for viewing a programming-related inspirational quote.
 - **CSS** - Application styling that looks good on different screen sizes, uses good whitespace, color choice and contrast. Little animations on the login and quote pages to make them more visually appealing.
 - **React** - Provides login, previous chat display, handles API requests and responses to ChatGPT, display posts of others' projects, backend endpoint calls. Single page application with views componentized and reactive to user's actions.
 - **Service** - Backend service with endpoints for:

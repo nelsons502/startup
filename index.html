@@ -1,45 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<!--
+<html lang-"en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Date Roulette</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, intitial-scale=1.0">
+  <title>Login - Focused Coding</title>
 </head>
+-->
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="dashboard.html">My Spinners</a></li>
-                <li><a href="spinner.html">Spin</a></li>
-                <li><a href="date_ideas.html">Date Ideas</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- Placeholder for main content -->
-    <main>
-        <h1>Welcome to Date Roulette!</h1>
-        <p>Spin the wheel to discover exciting date ideas!</p>
-        <h3>Log in or register:</h3>
-        <button id="login-button">Login</button>
-        <button id="register-button">Register</button>
-        <h3>Explore date ideas without an account:</h3>
-        <button id="explore-button">Explore Date Ideas</button>
-        <h3>How it works:</h3>
-        <ol>
-            <li>Log in or register to create your custom spinners.</li>
-            <li>Choose from a variety of date ideas.</li>
-            <li>Spin the wheel and let fate decide your next adventure!</li>
-        </ol>
-        
-    </main>
-
-    <footer>
-        <p>&copy; 2025 Date Roulette</p>
-    </footer>
-
-    <script src="script.js"></script>
+  <div class="center-container">
+    <h1>Login</h1>
+    <form action="/login-endpoint-here" method=POST>
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit">Log In</button>
+    </form>
+    <p>Don't have an account? <a href="/register-link">Contact Nelson</a> to get one set up.</p>
+  </div>
+  
 </body>
 </html>
