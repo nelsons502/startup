@@ -1,121 +1,52 @@
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    display: flex;
-    height: 100vh;
-    background-color: #fcc;
-  }
+<!DOCTYPE html>
+
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intitial-scale=1.0">
+    <title>Chats - FC</title>
+  </head>
   
-  /* Sidebar styling*/
-  .sidebar {
-    width: 20%;
-    max-width: 300px;
-    background-color: #eaa;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.15);
-  }
-  
-  .sidebar h2 {
-    margin-top: 0;
-    font-size: 25px;
-  }
-  
-  .chat-list {
-    margin-top: 20px;
-    flex: 1;
-    overflow-y: auto;
-  }
-  
-  .chat-item {
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 5px;
-    background-color: #c88;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .chat-item:hover {
-    background-color: #a66;
-  }
-  
-  .chat-item.active {
-    background-color: #955;
-  }
-  
-  /*Main chat styling*/
-  .main-content {
-    flex: 1;
-    background-color: #aee;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .chat-header {
-    padding: 15px;
-    background-color: #5aa;
-    color: #000;
-    font-size: 20px;
-    border-bottom: 2px solid #499;
-  }
-  
-  .chat-body {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .chat-body p {
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 5px;
-  }
-  
-  .chat-body .ai-msg {
-    align-self: flex-start;
-    background-color: #ddd;
+  <body>
+      <header>
+          <nav>
+              <ul>
+                  <li><a href="index.html">Login</a></li>
+                  <li><a href="chat.html">AI Chat</a></li>
+                  <li><a href="posts.html">Posts</a></li>
+                  <li><a href="quote.html">Inspire</a></li>
+              </ul>
+          </nav>
+      </header>
+      <main>
+            <!--Sidebar for past chats-->
+            <div class="sidebar">
+              <h2>Recent Chats</h2>
+              <div class="chat-list">
+                <div class="chat-item active">Chat with AI (current)</div>
+                <div class="chat-item">Chat from yesterday</div>
+                <div class="chat-item">Chat from two days ago</div>
+                <div class="chat-item">Chat from two days ago in the morning</div>
+                <div class="chat-item">Chat from a week ago</div>
+              </div>
+            </div>
+            
+            <!--Main Chat-->
+            <div class="main-content">
+              <div class="chat-header">
+                Current Chat [Current topic]
+              </div>
+              <div class="chat-body">
+                <p class="usr-msg">Can you help me understand recursion?</p>
+                <p class="ai-msg">Sure! Recursion is a method of solving problems where a function calls itself as a subroutine...</p>
+              </div>
+              <div class="chat-footer">
+                <input type="text" placeholder="Type your message">
+                <button>Send</button>
+              </div>
+            </div>
+
+      </main>
     
-  }
-  
-  .chat-body .usr-msg {
-    background-color: #70c7c7;
-    align-self: flex-end;
-    text-align: right;
-    max-width: 60%;
-    border-radius: 12px;
-  }
-  
-  .chat-footer {
-    padding: 10px;
-    border-top: 2px solid #499;
-    background-color: #5aa;
-    display: flex;
-  }
-  
-  .chat-footer input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #499;
-    border-radius: 5px;
-  }
-  
-  .chat-footer button {
-    margin-left: 5px;
-    padding: 10px 10px;
-    background-color: #aee;
-    color: #000;
-    border: 2px solid #499;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .chat-footer button:hover {
-    background-color: #499;
-    color: #fff;
-    border: 2px solid #aee
-  }
+  </body>
+  </html>
