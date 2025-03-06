@@ -6,7 +6,7 @@ BYU course instruction found here: https://github.com/webprogramming260/.github/
 Meet the ***Focused Coding*** online community interface! This fun, interactive website has a chatbot designed to guide young Computer Science students through challenging concepts and projects. With a clean chat interface and easy access to recent conversations for review, the bot uses natural language to clarify tough topics, provide constructive feedback on code, and offer abstract examples - all without doing the work in the student's place! Features include inspirational programming quotes refreshed via API, a project showcase to celebrate peer achievements, and a secure login for a personalized experience. It’s an application for fostering **creativity**, **community**, and **focus**!
 
 ## Diagrams
-![Image of website design](startup-design.png)
+![Image of website design](images/startup-design.png)
 
 ## More detailed description
 

@@ -19,3 +19,7 @@ I'm having trouble getting the https versions of my site up and running... Hopef
 I have gotten very behind in the class, but I am determined to catch up. I plan to spend 8-10 hours a week on this class for the rest of the semester, or until I have everything completed. I'm not willing to take the class again when I can get it done NOW!
 
 **Update**: Dr. Jensen was encouraging but told me that I would definitely need to invest a ***LOT*** of time into the class in order to pass. I'm willing to do so, I just need to put the time in and communicate with the TA's whenever I get stuck on something.
+
+## HTML
+In working with HTML, I have come to appreciate the importance of good DOM design. It will either make or break your web application to have the page laid out in a good format. In order for the CSS, JS and other technologies to work well with the page, everything needs to be neat and intuitive, as this will make it much easier to modify the DOM over time.
+
