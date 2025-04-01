@@ -20,6 +20,10 @@ I have gotten very behind in the class, but I am determined to catch up. I plan 
 
 **Update**: Dr. Jensen was encouraging but told me that I would definitely need to invest a ***LOT*** of time into the class in order to pass. I'm willing to do so, I just need to put the time in and communicate with the TA's whenever I get stuck on something.
 
-## HTML
+## HTML deliverable
 In working with HTML, I have come to appreciate the importance of good DOM design. It will either make or break your web application to have the page laid out in a good format. In order for the CSS, JS and other technologies to work well with the page, everything needs to be neat and intuitive, as this will make it much easier to modify the DOM over time.
+
+
+## 4/1/25
+I uploaded the Simon HTML to my website. I learned that we need to put the the code all together in a good structure and that the navigation is a huge part of the web app. I also learned that putting the DOCUTYPE twice in the HTML can mess up what gets shown on the page.
 

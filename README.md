@@ -40,3 +40,22 @@ The application will also include other features, such as:
   - displayed a random quote using the https://programming-quotes-api.azurewebsites.net/api/quotes/random API
 - **DB/Login** - Store users, chats, and posts in database. Register and login users. Credentials securely stored in database. Can't chat with bot or view posts unless authenticated.
 - **WebSocket** - As soon as a new project is posted, all users can see the post get added to the feed.
+
+
+## Deliverables
+
+### AWS
+I followed the instructions and got some help from Dr. Jensen when I was stuck. I'll continue to reach out when I feel I need help.
+
+### HTML
+For this deliverable I did the following.
+
+- [x] **HTML pages** - Four different pages. One for each view. `index.html` (Login), `chat.html`, `posts.html`, and `quote.html`.
+- [x] **Proper HTML element usage** - I learned about elements. I used header, footer, main, nav, img, a, input, button, form, div, and more.
+- [x] **Links** - Links between views.
+- [x] **Text** - Each page has text.
+- [x] **3rd party API placeholder** - Quote page has a place to display an inspirational quote and author.
+- [x] **Images** - Simple image currently displayed on `index.html`.
+- [x] **Login placeholder** - Placeholder for auth on the login page.
+- [x] **DB data placeholder** - Posts placeholder on the posts page.
+- [x] **WebSocket placeholder** - Real-time updates when number of likes on a post updates.
