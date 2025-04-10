@@ -49,7 +49,6 @@ I followed the instructions and got some help from Dr. Jensen when I was stuck. 
 
 ### HTML
 For this deliverable I did the following.
-
 - [x] **HTML pages** - Four different pages. One for each view. `index.html` (Login), `chat.html`, `posts.html`, and `quote.html`.
 - [x] **Proper HTML element usage** - I learned about elements. I used header, footer, main, nav, img, a, input, button, form, div, and more.
 - [x] **Links** - Links between views.
@@ -59,3 +58,12 @@ For this deliverable I did the following.
 - [x] **Login placeholder** - Placeholder for auth on the login page.
 - [x] **DB data placeholder** - Posts placeholder on the posts page.
 - [x] **WebSocket placeholder** - Real-time updates when number of likes on a post updates.
+
+### CSS
+For this deliverable I did the following.
+- [x] **Header, footer, and main content body** - I used a common CSS file to style these `styles.css`. This applies to all four of my `.html` pages to be simpler than having separate `.css` files for each.
+- [x] **Navigation elements** - Fairly basic navigation style. Resizes to column style when page is tight.
+- [x] **Responsive to window resizing** - Navigation goes vertical when width is small. My favorite is that the "Recent Chats" disappears when the screen size ration is less than 4/5.
+- [x] **Application elements** - I used a lot of `display:flex` to get things to align correctly. I'm particularly pleased with the simple but elegant layout of the posts page.
+- [x] **Application text content** - Set all my text to Arial (sans-serif) and it looks nice, if a little boring. I might upgrade it later.
+- [x] **Application images** - I left the about image as is. It's also pretty boring. I will probably upgrade that soon too.

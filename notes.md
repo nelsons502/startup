@@ -27,3 +27,5 @@ In working with HTML, I have come to appreciate the importance of good DOM desig
 ## 4/1/25
 I uploaded the Simon HTML to my website. I learned that we need to put the the code all together in a good structure and that the navigation is a huge part of the web app. I also learned that putting the DOCUTYPE twice in the HTML can mess up what gets shown on the page.
 
+## 4/10/25
+Added the Simon CSS a few days ago. CSS really was a game changer for the internet! It makes all the difference on how a website feels and looks. I decided to change my CSS to "dark-mode" so that it would be easier on my eyes throughout this project. I wonder how hard it is to toggle back and forth between light and dark mode. I image there would just be two different `styles.css` files that get selected based on whether dark mode is enabled or not. Pretty cool!
