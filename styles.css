@@ -1,14 +1,32 @@
+/* General Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-body {
-    font-family: "Arial", sans-serif;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
     line-height: 1.6;
-    background-color: #efefff;
-    color: #333;
+    background-color: #f9fafb; /* Light grayish-blue background */
+    color: #333; /* Dark text for contrast */
     padding: 0;
     margin: 0;
-}
+  }
+  
+  a {
+    text-decoration: none;
+    color: #007bff; /* Blue links */
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  header {
+    background-color: #333; /* Dark header background */
+    color: white;
+    padding: 1rem 2rem;
+  }
+  
+  
