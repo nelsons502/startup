@@ -1,0 +1,22 @@
+{
+  "name": "startup",
+  "version": "1.0.0",
+  "description": "A repo for my startup, Focused Coding BYU course instruction found here: https://github.com/webprogramming260/.github/blob/main/profile/instructionTopics.md",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nelsons502/startup.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nelsons502/startup/issues"
+  },
+  "homepage": "https://github.com/nelsons502/startup#readme",
+  "dependencies": {
+    "give-me-a-joke": "^0.5.1"
+  }
+}

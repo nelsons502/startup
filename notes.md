@@ -29,3 +29,5 @@ I uploaded the Simon HTML to my website. I learned that we need to put the the c
 
 ## 4/10/25
 Added the Simon CSS a few days ago. CSS really was a game changer for the internet! It makes all the difference on how a website feels and looks. I decided to change my CSS to "dark-mode" so that it would be easier on my eyes throughout this project. I wonder how hard it is to toggle back and forth between light and dark mode. I image there would just be two different `styles.css` files that get selected based on whether dark mode is enabled or not. Pretty cool!
+
+I decided not to use any frameworks since I have some experience with them already from teaching basic Web Dev to kids over Zoom. I wanted to have more control over what everything looked like, although my buttons took after Bootstrap I think.
