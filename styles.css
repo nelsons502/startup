@@ -6,7 +6,7 @@
 }
   
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: "Montserrat", sans-serif;
     line-height: 1.6;
     background-color: #121212; /* Dark background */
     color: #e0e0e0; /* Light text for contrast */
@@ -253,4 +253,88 @@ input[type="password"] {
     .center-container {
       padding: 1rem;
     }
+}
+
+
+
+
+/* modified colors */
+body {
+    background-color: #0e1a24; /* Dark navy background */
+    color: #f2f2f2; /* Soft white text */
+}
+
+a {
+    color: #5de1dd; /* Teal accent links */
+}
+
+nav ul li a:hover {
+    color: #ff8243; /* Bright orange hover */
+}
+
+header {
+    background-color: #12222f; /* Slightly lighter navy */
+    color: #f2f2f2;
+}
+
+.center-container {
+    background: #152c3d; /* Dark teal-ish background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+p {
+    color: #cfd8dc; /* Softer gray for text */
+}
+
+button {
+    background-color: #1c394f; /* Muted navy for buttons */
+    border: 1px solid #5de1dd; /* Teal border */
+    color: #ffffff;
+}
+
+button:hover {
+    background-color: #ff8243; /* Bright orange hover */
+}
+
+input[type="text"],
+input[type="password"] {
+    background-color: #1a2d3a;
+    border: 1px solid #5de1dd;
+    color: #f2f2f2;
+}
+
+.sidebar {
+    background: #142832;
+    border-right: 1px solid #5de1dd;
+}
+
+.chat-item.active {
+    background: #5de1dd;
+    color: #0e1a24;
+}
+
+.chat-body {
+    background: #1b3241;
+}
+
+.usr-msg {
+    background: #264653;
+    color: #ffbfb3;
+}
+
+.ai-msg {
+    background: #264653;
+    color: #b3ffd9;
+}
+
+.post-card {
+    background: #183647;
+}
+
+#quote {
+    color: #5de1dd;
+}
+
+#author {
+    color: #a9c7d1;
 }
