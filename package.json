@@ -15,8 +15,5 @@
   "bugs": {
     "url": "https://github.com/nelsons502/startup/issues"
   },
-  "homepage": "https://github.com/nelsons502/startup#readme",
-  "dependencies": {
-    "give-me-a-joke": "^0.5.1"
-  }
+  "homepage": "https://github.com/nelsons502/startup#readme"
 }
