@@ -15,12 +15,12 @@ export default function App() {
                 <nav>
                     <div className='company_name'>Focus Coding</div>
 
-                    <menu>
+                    <ul>
                         <li><NavLink to="/login">Login</NavLink></li>
                         <li><NavLink to="/chat">Chat</NavLink></li>
                         <li><NavLink to="/posts">Posts</NavLink></li>
                         <li><NavLink to="/quote">Quote</NavLink></li>
-                    </menu>
+                    </ul>
                 </nav>
             </header>
 

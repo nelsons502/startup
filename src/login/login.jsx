@@ -3,7 +3,7 @@ import React from "react";
 export default function Login() {
     return (
         <main>
-            <div class="center-container">
+            <div className="center-container">
                 <h1>Login</h1>
                 <form action="/chat" method="get">
                     <input type="text" name="username" placeholder="Username" required></input>

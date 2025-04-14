@@ -45,23 +45,23 @@ header {
     color: #ff6f61;
 }
   
-menu {
+nav ul {
     list-style: none;
     display: flex;
     gap: 1.5rem;
 }
   
-menu li {
+nav ul li {
     display: inline;
 }
   
-menu li NavLink {
+nav ul li NavLink {
     color: #e0e0e0;
     font-weight: bold;
     transition: color 0.3s ease;
 }
   
-menu li NavLink:hover {
+nav ul li NavLink:hover {
     color: #ff6f61; /* Vibrant orange hover effect */
 }
   
@@ -135,7 +135,7 @@ input[type="password"] {
     width: 25%;
     background: #2a2a2a; /* Dark sidebar background */
     padding: 1rem;
-    height: 100vh;
+    height: 90vh;
     border-right: 1px solid #444; /* Darker border */
 }
   
@@ -162,7 +162,7 @@ input[type="password"] {
     color: #ffffff; /* Light text color */
 }
   
-.main-content {
+.main-chat {
     float: right;
     width: 75%;
     padding: 1rem;

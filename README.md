@@ -75,3 +75,10 @@ For this deliverable I did the following.
 - [x] **Bundled using Vite** - It was easy to install and use Vite. I really appreciated how it sped up the deployment process too!
 - [x] **Components** - It was simple to bring the code over from HTML and CSS. I had to rework them quite a bit, but Dr. Jensen's video was very helpful for this.
 - [x] **Router** - While creating the component routing was fairly straightforward, I'm not 100% sure I understood it. I will make sure to keep paying attention to what that is doing as I move into part 2 of React and JS.
+
+## React part 2: Reactivity
+
+For this deliverable I did the following. `TODO: complete this section`
+
+- [x] **All functionality implemented or mocked out** - Mostly using local storage to store user and scores. WebSocket notifications mocked with a timer.
+- [x] **Hooks** - Extensive use of `useEffect`. I also had to use `useRef` so that the play top level component could execute the color sequence for the user on the child button components.
