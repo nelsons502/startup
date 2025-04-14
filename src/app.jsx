@@ -26,7 +26,7 @@ export default function App() {
 
             <main>
                 <Routes>
-                    <Route path="/" element={<h1>Welcome to Focus Coding!</h1>} exact />
+                    <Route path="/" element={<WelcomeMessage />} exact />
                     <Route path="/login" element={<Login />} />
                     <Route path="/chat" element={<Chat />} />
                     <Route path="/posts" element={<Posts />} />
@@ -46,4 +46,13 @@ export default function App() {
 
 function NotFound() {
     return <h1>404 Not Found</h1>;
+}
+
+function WelcomeMessage() {
+    return (
+        <div className="welcome-container">
+            <h1 className="welcome-message">Welcome to Focus Coding!</h1>
+            <img src="/focus_logo.png" className="logo" alt="Focus Logo"></img>
+        </div>
+    );
 }
