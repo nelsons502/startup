@@ -1,27 +1,49 @@
 import React from 'react';
 import './styles.css';
 
+import {    BrowserRouter as Router, NavLink, Route, Routes } from 'react-router-dom';
+import Login from './login/login';
+import Chat from './chat/chat';
+import Posts from './posts/posts';
+import Quote from './quote/quote';
+
 export default function App() {
     return (
-    <div>
-        <header>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Login</a></li>
-                    <li><a href="chat.html">AI Chat</a></li>
-                    <li><a href="posts.html">Posts</a></li>
-                    <li><a href="quote.html">Inspire</a></li>
-                </ul>
-            </nav>
-        </header>
+    <Router>
+        <div>
+            <header>
+                <nav>
+                    <div className='company_name'>Focus Coding</div>
 
-        <main>
-            App will show here
-        </main>
+                    <menu>
+                        <li><NavLink to="/login">Login</NavLink></li>
+                        <li><NavLink to="/chat">Chat</NavLink></li>
+                        <li><NavLink to="/posts">Posts</NavLink></li>
+                        <li><NavLink to="/quote">Quote</NavLink></li>
+                    </menu>
+                </nav>
+            </header>
 
-        <footer>
-            <p>GitHub repo: <a href="https://github.com/nelsons502/startup">startup</a>.</p>
-        </footer>
-    </div>
+            <main>
+                <Routes>
+                    <Route path="/" element={<h1>Welcome to Focus Coding!</h1>} exact />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/chat" element={<Chat />} />
+                    <Route path="/posts" element={<Posts />} />
+                    <Route path="/quote" element={<Quote />} />
+                    <Route path="*" element={<NotFound />} />
+                </Routes>
+            </main>
+
+            <footer>
+            <p>If you have any questions or feedback, feel free to reach out via text (at <a href="tel:+14802021476">480-202-1476</a>) or <a href="mailto:nmschnepf@gmail.com">email</a>.</p>
+                <p>GitHub repo: <a href="https://github.com/nelsons502/startup">startup</a>.</p>
+            </footer>
+        </div>
+    </Router>
     );
+}
+
+function NotFound() {
+    return <h1>404 Not Found</h1>;
 }
