@@ -67,3 +67,11 @@ For this deliverable I did the following.
 - [x] **Application elements** - I used a lot of `display:flex` to get things to align correctly. I'm particularly pleased with the simple but elegant layout of the posts page.
 - [x] **Application text content** - Set all my text to Arial (sans-serif) and it looks nice, if a little boring. I might upgrade it later.
 - [x] **Application images** - I left the about image as is. It's also pretty boring. I will probably upgrade that soon too.
+
+## React part 1: Routing deliverable
+
+For this deliverable I did the following.
+
+- [x] **Bundled using Vite** - It was easy to install and use Vite. I really appreciated how it sped up the deployment process too!
+- [x] **Components** - It was simple to bring the code over from HTML and CSS. I had to rework them quite a bit, but Dr. Jensen's video was very helpful for this.
+- [x] **Router** - While creating the component routing was fairly straightforward, I'm not 100% sure I understood it. I will make sure to keep paying attention to what that is doing as I move into part 2 of React and JS.

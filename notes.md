@@ -35,3 +35,4 @@ I decided not to use any frameworks since I have some experience with them alrea
 ## 4/13/25
 I learned about React and Vite. These are really cool tools that do so much work for me! As I use them, I'm worried about breaking the system apart with too much tinkering. I'm really glad I have git to handle version control for me so that I can't mess things up too badly! Web Dev is one of the most community-involved areas of coding that I have explored yet! I wonder if I will make a great contribution to some aspect of CS someday like Jordan Walke did. 
 
+I had a lot of fun putting together the first half of the React! It was very straightforward and I felt quite accomplished after. I showed it to my wife and she likes it so far! I feel like this could becomem something that I actually use and make money from granting people access to! It would be a value-adding part of the company I want to start.
