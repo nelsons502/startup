@@ -1,0 +1,25 @@
+  
+/* Posts Page Styles */
+.post-card {
+    background: #1b3646; /* Dark post card background */
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+  
+.post-card:hover {
+    transform: translateY(-5px);
+}
+  
+.like-button,
+.download-button {
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+}
+  
+.timestamp {
+    font-size: 0.875rem;
+    color: #777; /* Light gray timestamp */
+}

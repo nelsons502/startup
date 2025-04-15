@@ -1,3 +1,5 @@
+import { Chat } from "./chatClass";
+
 const CHAT_STORAGE_KEY = "focus_coding_chats";
 
 function loadChats() {
@@ -18,13 +20,10 @@ export function getChatById(chatId) {
   return chats.find(chat => chat.id === chatId);
 }
 
-export function createNewChat(title = "New Chat") {
+export function createNewChat() {
   const chats = loadChats();
-  const newChat = {
-    id: Date.now(),
-    title,
-    messages: []
-  };
+  const num = chats.length + 1;
+  const newChat = new Chat(num);
   chats.unshift(newChat);
   saveChats(chats);
   return newChat;
@@ -35,6 +34,15 @@ export function addMessageToChat(chatId, message) {
   const chatIndex = chats.findIndex(chat => chat.id === chatId);
   if (chatIndex === -1) return;
 
-  chats[chatIndex].messages.push(message);
+  const chat = chats[chatIndex];
+  const updatedChat = new Chat();
+  Object.assign(updatedChat, chat);  // revive class methods
+  updatedChat.addMessage(message);
+  updatedChat.update();
+
+  // Remove old position and move to top
+  chats.splice(chatIndex, 1);
+  chats.unshift(updatedChat);
+
   saveChats(chats);
 }

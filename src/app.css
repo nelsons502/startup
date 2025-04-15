@@ -87,11 +87,12 @@ main {
 .center-container {
     max-width: 800px;
     margin: 0 auto;
-    background: #1e1e1e; /* Dark container background */
     padding: 2rem;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
+    animation: fadeIn 1s ease-in-out;
+    background: #152c3d; /* Dark teal-ish background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
   
 h1, h2, h3, h4 {
@@ -129,124 +130,6 @@ input[type="password"] {
     color: #e0e0e0; /* Light text color */
 }
   
-/* Chat Page Styles */
-.sidebar {
-    float: left;
-    width: 25%;
-    background: #2a2a2a; /* Dark sidebar background */
-    padding: 1rem;
-    height: 90vh;
-    border-right: 1px solid #444; /* Darker border */
-}
-  
-.chat-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-  
-.chat-item {
-    padding: 0.75rem;
-    background: #2a2a2a; /* Dark chat item background */
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-  
-.chat-item:hover {
-    background: #3a3a3a; /* Darker hover effect */
-}
-  
-.chat-item.active {
-    background: #0056b3; /* Active chat item background */
-    color: #ffffff; /* Light text color */
-}
-  
-.main-chat {
-    float: right;
-    width: 75%;
-    padding: 1rem;
-}
-  
-.chat-header {
-    font-size: 1.25rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-}
-  
-.chat-body {
-    background: #2a2a2a; /* Dark chat body background */
-    padding: 1rem;
-    border-radius: 5px;
-    min-height: 300px;
-    overflow-y: auto;
-}
-  
-.usr-msg {
-    background: #444444; /* Dark grey background */
-    color: #eebfbf; /* Light text color */
-    padding: 0.75rem;
-    border-radius: 5px;
-    margin-bottom: 0.5rem;
-    align-self: flex-end;
-}
-  
-.ai-msg {
-    background: #444444; /* Dark grey background */
-    color: #bfeebf; /* Light text color */
-    padding: 0.75rem;
-    border-radius: 5px;
-    margin-bottom: 0.5rem;
-    align-self: flex-start;
-}
-  
-.chat-footer {
-    display: flex;
-    gap: 0.5rem;
-}
-  
-.chat-footer input {
-    flex-grow: 1;
-}
-  
-/* Posts Page Styles */
-.post-card {
-    background: #2a2a2a; /* Dark post card background */
-    padding: 1rem;
-    border-radius: 5px;
-    margin-bottom: 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-  
-.post-card:hover {
-    transform: translateY(-5px);
-}
-  
-.like-button,
-.download-button {
-    margin-top: 0.5rem;
-    margin-right: 0.5rem;
-}
-  
-.timestamp {
-    font-size: 0.875rem;
-    color: #777; /* Light gray timestamp */
-}
-  
-/* Quote Page Styles */
-#quote {
-    font-size: 1.5rem;
-    font-style: italic;
-    color: #64b5f6; /* Light blue quote text */
-}
-  
-#author {
-    font-size: 1rem;
-    color: #b0bec5; /* Light gray author text */
-    margin-bottom: 1rem;
-}
-  
 /* Animations */
 @keyframes fadeIn {
     from {
@@ -255,10 +138,6 @@ input[type="password"] {
     to {
         opacity: 1;
     }
-}
-  
-.center-container {
-    animation: fadeIn 1s ease-in-out;
 }
 
 @media screen and (max-aspect-ratio: 4/5) {
@@ -299,18 +178,9 @@ a {
     color: #5de1dd; /* Teal accent links */
 }
 
-nav ul li a:hover {
-    color: #ff8243; /* Bright orange hover */
-}
-
 header {
     background-color: #12222f; /* Slightly lighter navy */
     color: #f2f2f2;
-}
-
-.center-container {
-    background: #152c3d; /* Dark teal-ish background */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 p {
@@ -332,42 +202,6 @@ input[type="password"] {
     background-color: #1a2d3a;
     border: 1px solid #5de1dd;
     color: #f2f2f2;
-}
-
-.sidebar {
-    background: #142832;
-    border-right: 1px solid #5de1dd;
-}
-
-.chat-item.active {
-    background: #5de1dd;
-    color: #0e1a24;
-}
-
-.chat-body {
-    background: #1b3241;
-}
-
-.usr-msg {
-    background: #264653;
-    color: #ffbfb3;
-}
-
-.ai-msg {
-    background: #264653;
-    color: #b3ffd9;
-}
-
-.post-card {
-    background: #183647;
-}
-
-#quote {
-    color: #5de1dd;
-}
-
-#author {
-    color: #a9c7d1;
 }
 
 footer {

@@ -28,10 +28,18 @@ export default function ChatBox({ onNewMessage }) {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         disabled={loading}
-      />
-      <button onClick={handleSend} disabled={loading}>
-        {loading ? "..." : "Send"}
-      </button>
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && !loading) {
+            handleSend();
+          }
+        }}
+        />
+        <button onClick={handleSend} disabled={loading}>
+            {loading ? "..." : "Send"}
+        </button>
+        <div className="loading-indicator">
+            {loading && <span>Loading...</span>}
+        </div>
     </div>
   );
 }

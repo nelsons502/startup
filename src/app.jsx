@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './styles.css';
+import './app.css';
 
 import { BrowserRouter as Router, NavLink, Route, Routes } from 'react-router-dom';
 import Login from './login/login';

@@ -1,0 +1,12 @@
+/* Quote Page Styles */
+#quote {
+    font-size: 1.5rem;
+    font-style: italic;
+    color: #64b5f6; /* Light blue quote text */
+}
+  
+#author {
+    font-size: 1rem;
+    color: #b0bec5; /* Light gray author text */
+    margin-bottom: 1rem;
+}

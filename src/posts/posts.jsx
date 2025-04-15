@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PostCard from "./postCard";
 import { allDummyPosts } from "./postsService";
+import "./posts.css";
 
 
 export default function Posts() {
