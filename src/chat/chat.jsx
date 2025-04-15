@@ -10,6 +10,17 @@ import {
 } from "./chatManager";
 
 export default function Chat() {
+  const username = localStorage.getItem("username");
+  if (!username) {
+      return (
+          <main>
+              <div className="center-container">
+                  <p>You must log in to use/view this feature.</p>
+              </div>
+          </main>
+      );
+  }
+
   const [chats, setChats] = useState([]);
   const [currentChatId, setCurrentChatId] = useState(null);
   const [messages, setMessages] = useState([]);

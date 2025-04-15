@@ -13,8 +13,7 @@ export default function App() {
     useEffect(() => {
         const checkLogin = () => {
             const username = localStorage.getItem("username");
-            const password = localStorage.getItem("password");
-            setIsLoggedIn(!!username && !!password);
+            setIsLoggedIn(!!username);
         };
     
         checkLogin(); // initial load
@@ -28,7 +27,6 @@ export default function App() {
     const handleAuthClick = () => {
         if (isLoggedIn) {
             localStorage.removeItem("username");
-            localStorage.removeItem("password");
             setIsLoggedIn(false);
             window.dispatchEvent(new Event("authChange"));
         } else {

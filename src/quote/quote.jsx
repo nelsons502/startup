@@ -2,6 +2,17 @@ import React, {useEffect, useState } from "react";
 import "./quote.css";
 
 export default function Quote() {
+    const username = localStorage.getItem("username");
+    if (!username) {
+        return (
+            <main>
+                <div className="center-container">
+                    <p>You must log in to use/view this feature.</p>
+                </div>
+            </main>
+        );
+    }
+    
     const [quote, setQuote] = useState("Loading inspirational quote...");
     const [author, setAuthor] = useState("");
 

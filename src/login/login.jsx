@@ -20,6 +20,16 @@ export default function LoginWrapper() {
   function handleAuthChange(name, newState) {
     setUserName(name);
     setAuthState(newState);
+    setTimeout(() => {
+      window.dispatchEvent(new Event("authChange"));
+    }, 100);
+    if (newState === AuthState.Unauthenticated) {
+      localStorage.removeItem("username");
+    } else {
+      localStorage.setItem("username", name);
+    }
+    window.dispatchEvent(new Event("authChange"));
+    window.location.href = "/";
   }
 
   return (
