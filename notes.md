@@ -40,3 +40,9 @@ I had a lot of fun putting together the first half of the React! It was very str
 ## 4/14/25
 Just deployed Simon React (part 2) to my site. I have learned about JavaScript and love how dynamic the language is! In a lot of ways, it reminds me of Python (untyped with dynamic objects, arrays and other features). I can definitely appreaciate the clever ways it goes about using `Promises`, `async` and `await` to make the best use out of single-threaded processors. I think my website uses those features pretty well, and I am excited to finish up the JS for it and deploy later today!
 
+## 4/15/25
+I finally got the React and JS functionality I wanted! I am pleased with the dummy code I have in place for the server/database stuff I will need. I'm not too worried about that part of the code. I will tackle that next. I have learned a lot about javascript and like it more and more as I work with it (although it is prone to all sorts of type-errors haha). I haven't gotten as much experience with `async`, `await` and `Promises` yet, but I expect I will be able to do plenty of that with the Backend stuff.
+
+The hardest part of this deliverable was getting the right structure set up for the different pages. I was able to get everything working smoothly thanks to inspiration from the simon login code. There were a few scary moments here and there where I did not know what to do with any error, and the debugging features in the browser came in handy. 
+
+I will probably add an `About` page to my site eventually. For now, the 4 pages I have will be good!

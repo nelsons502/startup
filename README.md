@@ -78,7 +78,7 @@ For this deliverable I did the following.
 
 ## React part 2: Reactivity
 
-For this deliverable I did the following. `TODO: complete this section`
+For this deliverable I did the following.
 
-- [x] **All functionality implemented or mocked out** - Mostly using local storage to store user and scores. WebSocket notifications mocked with a timer.
-- [x] **Hooks** - Extensive use of `useEffect`. I also had to use `useRef` so that the play top level component could execute the color sequence for the user on the child button components.
+- [x] **All functionality implemented or mocked out** - Mostly using local storage to store username, posts, likes and such. WebSocket is mocked up with a `getPosts` function. I'm especially pleased by the AI that is working (nearly) perfectly! I just need to make sure it is sending the context of a chat to the server (which it is not doing quite yet).
+- [x] **Hooks** - Extensive use of `useEffect` and `useState`. I think it is in just about every `.jsx` file. They are quite useful!
