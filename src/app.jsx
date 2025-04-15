@@ -1,13 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles.css';
 
-import {    BrowserRouter as Router, NavLink, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, NavLink, Route, Routes } from 'react-router-dom';
 import Login from './login/login';
 import Chat from './chat/chat';
 import Posts from './posts/posts';
 import Quote from './quote/quote';
 
 export default function App() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const checkLogin = () => {
+            const username = localStorage.getItem("username");
+            const password = localStorage.getItem("password");
+            setIsLoggedIn(!!username && !!password);
+        };
+    
+        checkLogin(); // initial load
+        window.addEventListener("authChange", checkLogin);
+    
+        return () => {
+            window.removeEventListener("authChange", checkLogin);
+        };
+    }, []);
+
+    const handleAuthClick = () => {
+        if (isLoggedIn) {
+            localStorage.removeItem("username");
+            localStorage.removeItem("password");
+            setIsLoggedIn(false);
+            window.dispatchEvent(new Event("authChange"));
+        } else {
+            window.location.href = "/login";
+        }
+    };
+
     return (
     <Router>
         <div>
@@ -16,11 +44,19 @@ export default function App() {
                     <div className='company_name'>Focus Coding</div>
 
                     <ul>
-                        <li><NavLink to="/login">Login</NavLink></li>
-                        <li><NavLink to="/chat">Chat</NavLink></li>
-                        <li><NavLink to="/posts">Posts</NavLink></li>
-                        <li><NavLink to="/quote">Quote</NavLink></li>
+                        {isLoggedIn && (
+                            <>
+                                <li><NavLink to="/chat">Chat</NavLink></li>
+                                <li><NavLink to="/posts">Posts</NavLink></li>
+                                <li><NavLink to="/quote">Quote</NavLink></li>
+                            </>
+                        )}
                     </ul>
+                    <div className="auth-button">
+                        <button onClick={handleAuthClick}>
+                            {isLoggedIn ? "Logout" : "Login"}
+                        </button>
+                    </div>
                 </nav>
             </header>
 

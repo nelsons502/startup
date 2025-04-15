@@ -369,3 +369,22 @@ input[type="password"] {
 #author {
     color: #a9c7d1;
 }
+
+footer {
+    background-color: #12222f; /* Slightly lighter navy */
+    color: #f2f2f2;
+    padding: 10px 0;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+}
+
+.auth-button {
+    margin-left: auto;
+    padding-right: 1rem;
+    right: 0;
+    position: absolute;
+    top: 1rem;
+}

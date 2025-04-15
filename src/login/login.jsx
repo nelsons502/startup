@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -11,10 +11,25 @@ export default function Login() {
         // Placeholder: In the future, replace this with an API call to authenticate
         localStorage.setItem("username", username);
         localStorage.setItem("password", password); // NOTE: Do NOT store passwords like this in production
+        // Notify other components of login state change
+        window.dispatchEvent(new Event("authChange"));
 
         // Redirect to the chat page
         navigate("/chat");
     };
+
+    useEffect(() => {
+        const user = localStorage.getItem("username");
+        const pass = localStorage.getItem("password");
+    
+        if (!user || !pass) {
+            // Already on login page, no need to redirect
+            return;
+        }
+    
+        // If somehow still logged in, redirect to chat
+        navigate("/chat");
+    }, []);
 
     return (
         <main>
