@@ -2,10 +2,10 @@
 
 // postCard.jsx
 import React, { useState, useEffect } from "react";
-import { likePost, hasUserLiked, downloadDummyCodeFile } from "./postsService";
+import { likePost, hasUserLiked, downloadPost } from "./postsService";
 
 export default function PostCard({ post }) {
-  const [likes, setLikes] = useState(0);
+  const [likes, setLikes] = useState(post.likes || 0);
   const [liked, setLiked] = useState(false);
 
   useEffect(() => {
@@ -23,7 +23,9 @@ export default function PostCard({ post }) {
   };
 
   const handleDownload = () => {
-    downloadDummyCodeFile();
+    downloadPost(post.id);
+    // Optionally, you can show a notification or alert that the download has started
+    alert(`Downloading ${post.title}...`);
   };
 
   return (
