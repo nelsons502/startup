@@ -82,3 +82,15 @@ For this deliverable I did the following.
 
 - [x] **All functionality implemented or mocked out** - Mostly using local storage to store username, posts, likes and such. WebSocket is mocked up with a `getPosts` function. I'm especially pleased by the AI that is working (nearly) perfectly! I just need to make sure it is sending the context of a chat to the server (which it is not doing quite yet).
 - [x] **Hooks** - Extensive use of `useEffect` and `useState`. I think it is in just about every `.jsx` file. They are quite useful!
+
+
+## Service deliverable
+
+For this deliverable I did the following.
+
+- [x] **Node.js/Express HTTP service** - Installed Express with NPM. Default port on 4000.js`.
+- [x] **Static middleware for frontend** - Simple endpoints in `service/index`.
+- [x] **Calls to third party endpoints** - About page calls `quote.cs260.click`, renders the resulting JSON with React.
+- [x] **Backend service endpoints** - Simple endpoints in `service/index` for auth and scores.
+- [x] **Frontend calls service endpoints** - All mocked functionality removed from the frontend and replaced with calls to the service.
+- [x] **Supports registration, login, logout, and restricted endpoint** - Fully support authentication and restrict access to scores.

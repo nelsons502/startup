@@ -21,7 +21,7 @@
   
 .timestamp {
     font-size: 0.875rem;
-    color: #2c2c2c; /* Light gray timestamp */
+    color: #777; /* Light gray timestamp */
 }
 
 .title-input {
