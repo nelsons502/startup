@@ -5,89 +5,14 @@ const uuid = require('uuid');
 const app = express();
 const PORT = 4000;
 
+const DB = require('./database.js');
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static('public'));
 
 const authCookieName = 'token';
 // include default values for the users, posts, and chats arrays
-let users = [
-    {
-        email: "bruce@wayne.com", 
-        password: bcrypt.hashSync("darkknight", 10), 
-        token: "robin"
-    },
-    {
-        email: "bob",
-        password: bcrypt.hashSync("hi", 10),
-        token: "default"
-    }
-];
-let posts = [
-    {
-        id: 1,
-        title: "Post Title 1",
-        content: "Content of the post goes here...",
-        timestamp: "2025-02-12 10:30 AM",
-        likes: 0,
-        likedBy: [],
-        code: "# This is dummy code\nprint('Hello, World!')",
-        type: "python",
-      },
-      {
-        id: 2,
-        title: "Post Title 2",
-        content: "Another example post content here...",
-        timestamp: "2025-02-13 11:00 AM",
-        likes: 0,
-        likedBy: [],
-        code: "// This is dummy code\nconsole.log('Hello, World!');",
-        type: "javascript",
-      },
-      {
-        id: 3,
-        title: "Post Title 3",
-        content: "Third post sample with simple content.",
-        timestamp: "2025-02-14 09:15 AM",
-        likes: 0,
-        likedBy: [],
-        code: '// This is dummy code\nclass Main {\n\tpublic static void main() {\nSystem.out.println("Hello, World!");\n}\n}',
-        type: "java",
-      },
-      {
-        id: 4,
-        title: "Post Title 4",
-        content: "More placeholder text for demonstration.",
-        timestamp: "2025-02-15 08:45 AM",
-        likes: 0,
-        likedBy: [],
-        code: '// This is dummy code\n#include <iostream>\nusing namespace std;\nint main() {\ncout << "Hello, World!";\nreturn 0;\n}',
-        type: "c++",
-      },
-      {
-        id: 5,
-        title: "Post Title 5",
-        content: "Yet another post with fake data.",
-        timestamp: "2025-02-16 03:20 PM",
-        likes: 0,
-        likedBy: [],
-        code: "# This is dummy code\nprint('Hello, World!')",
-        type: "python",
-      }
-];
-let chats = [
-  {
-    id: '1',
-    title: 'General Chat',
-    messages: [
-      { role: 'user', content: 'Hello!', timestamp: '2023-10-01T12:00:00Z' },
-      { role: 'assistant', content: 'Hi there!', timestamp: '2023-10-01T12:01:00Z' },
-    ],
-    createdAt: '2023-10-01T12:00:00Z',
-    updatedAt: '2023-10-01T12:01:00Z',
-    owner: 'bruce@wayne.com',
-  }
-];
 
 let router = express.Router();
 app.use('/api', router);
@@ -298,21 +223,25 @@ app.use((_req, res) => {
 
 /* ========= UTILITIES ========= */
 
-function verifyAuth(req, res, next) {
+async function verifyAuth(req, res, next) {
   const token = req.cookies[authCookieName];
-  const user = users.find(u => u.token === token);
+  const user = await DB.getUserByToken(token);
+  req.user = user;
   user ? next() : res.status(401).send({ msg: 'Unauthorized' });
 }
 
 async function createUser(email, password) {
   const passwordHash = await bcrypt.hash(password, 10);
   const user = { email, password: passwordHash, token: uuid.v4() };
-  users.push(user);
+  await DB.addUser(user);
   return user;
 }
 
 async function getUser(field, value) {
-  return value ? users.find(u => u[field] === value) : null;
+  if (!value) return null;
+  return field === 'token' 
+    ? DB.getUserByToken(value) 
+    : DB.getUser(value);
 }
 
 function setAuthCookie(res, user) {
