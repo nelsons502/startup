@@ -46,3 +46,18 @@ export async function downloadPost(postId) {
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
 }
+
+export async function createPost(postData) {
+    const res = await fetch("/api/posts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(postData),
+    });
+
+    if (!res.ok) {
+        throw new Error("Failed to create post");
+    }
+
+    return await res.json();
+}

@@ -21,5 +21,57 @@
   
 .timestamp {
     font-size: 0.875rem;
-    color: #777; /* Light gray timestamp */
+    color: #2c2c2c; /* Light gray timestamp */
+}
+
+.title-input {
+    background-color: #2c2c2c; /* Dark gray background */
+    color: #fff; /* White text */
+    border: solid 1px #aaa; /* Light gray border */
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.title-input:focus {
+    outline: none;
+    border-color: #fff; /* White border on focus */
+}
+
+.content-input {
+    background-color: #2c2c2c; /* Dark gray background */
+    color: #fff; /* White text */
+    border: solid 2px #aaa; /* Light gray border */
+    border-radius: 5px;
+    margin: 1rem;
+}
+
+.content-input:focus {
+    outline: none;
+    border-color: #fff; /* White border on focus */
+}
+
+.type-select {
+    background-color: #2c2c2c; /* Dark gray background */
+    color: #fff; /* White text */
+    border: solid 2px #aaa; /* Light gray border */
+    border-radius: 5px;
+    margin: 1rem;
+}
+
+.type-select:focus {
+    outline: none;
+    border-color: #fff; /* White border on focus */
+}
+
+.code-input {
+    background-color: #2c2c2c; /* Dark gray background */
+    color: #fff; /* White text */
+    border: solid 2px #aaa; /* Light gray border */
+    border-radius: 5px;
+    margin: 1rem;
+}
+
+.code-input:focus {
+    outline: none;
+    border-color: #fff; /* White border on focus */
 }
