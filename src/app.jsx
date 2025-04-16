@@ -24,8 +24,16 @@ export default function App() {
         };
     }, []);
 
-    const handleAuthClick = () => {
+    const handleAuthClick = async () => {
         if (isLoggedIn) {
+            try {
+                await fetch('/api/auth', {
+                    method: 'DELETE',
+                    credentials: 'include',
+                });
+            } catch (err) {
+                console.error("Logout failed:", err);
+            }
             localStorage.removeItem("username");
             setIsLoggedIn(false);
             window.dispatchEvent(new Event("authChange"));
