@@ -1,7 +1,8 @@
 export async function getPosts() {
+    console.log("Fetching posts from server");
     const res = await fetch("/api/posts", { credentials: "include" });
     if (!res.ok) {
-        throw new Error("Failed to fetch posts");
+        throw new Error("Failed to fetch posts: postsService error");
     }
     return await res.json();
 }
@@ -28,7 +29,7 @@ export async function downloadPost(postId) {
     if (!res.ok) return;
 
     const postInfo = await res.json();
-    console.log("Post info:", postInfo);
+    //console.log("Post info:", postInfo);
 
     const fileName = postInfo.filename;
 

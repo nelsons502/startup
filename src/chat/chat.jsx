@@ -10,32 +10,10 @@ import {
 } from "./chatManager";
 
 export default function Chat() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [authChecked, setAuthChecked] = useState(false);
-  const [userEmail, setUserEmail] = useState(null);
+  const [userEmail, setUserEmail] = useState(localStorage.getItem("userEmail"));
   const [chats, setChats] = useState([]);
   const [currentChatId, setCurrentChatId] = useState(null);
   const [messages, setMessages] = useState([]);
-  
-  useEffect(() => {
-    async function checkLogin() {
-      try {
-        const res = await fetch("/api/user/me", { credentials: "include" });
-        if (res.ok) {
-          const data = await res.json();
-          setIsLoggedIn(true);
-          setUserEmail(data.email);
-        } else {
-          setIsLoggedIn(false);
-        }
-      } catch {
-        setIsLoggedIn(false);
-      } finally {
-        setAuthChecked(true);
-      }
-    }
-    checkLogin();
-  }, []);
 
   useEffect(() => {
     async function loadChats() {
@@ -70,26 +48,6 @@ export default function Chat() {
     }
     loadChatMessages();
   }, [currentChatId]);
-
-  if (!authChecked) {
-    return (
-      <main>
-        <div className="center-container">
-          <p>Checking login status...</p>
-        </div>
-      </main>
-    );
-  }
-
-  if (!isLoggedIn) {
-    return (
-      <main>
-        <div className="center-container">
-          <p>You must log in to use/view this feature.</p>
-        </div>
-      </main>
-    );
-  }
 
   const handleNewMessage = async (msg) => {
     setMessages((prev) => [...prev, msg]);

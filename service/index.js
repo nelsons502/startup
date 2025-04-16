@@ -107,6 +107,7 @@ router.post('/auth/register', async (req, res) => {
 
 // Login
 router.put('/auth/login', async (req, res) => {
+  console.log(req.body);
   const { email, password } = req.body;
   const user = await getUser('email', email);
   if (user && await bcrypt.compare(password, user.password)) {
@@ -130,6 +131,7 @@ router.delete('/auth/logout', async (req, res) => {
 
 // Get all posts
 router.get('/posts', verifyAuth, (req, res) => {
+  console.log('getting all posts, server');
   res.send(posts); // any logged-in user can see all posts
 });
 
@@ -290,6 +292,7 @@ app.use(function(err, req, res, next) {
 
 /* ========= DEFAULT PAGE ========= */
 app.use((_req, res) => {
+  console.log('default page');
   res.sendFile('index.html', { root: 'public' });
 });
 

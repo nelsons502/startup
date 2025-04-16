@@ -1,7 +1,7 @@
 import React from "react";
 
-export function Unauthenticated({ props }) {
-  const [username, setUsername] = React.useState(props.userName);
+export function Unauthenticated({ userName, onLogin }) {
+  const [username, setUsername] = React.useState(userName);
   const [password, setPassword] = React.useState("");
   const [displayError, setDisplayError] = React.useState(null);
 
@@ -13,16 +13,19 @@ export function Unauthenticated({ props }) {
     loginOrCreate(`/api/auth/register`);
   }
   async function loginOrCreate(endpoint) {
+    console.log("loginOrCreate", endpoint);
     const response = await fetch(endpoint, {
-      method: "post",
+      // "put" for login, "post" for register
+      method: endpoint.includes("login") ? "put" : "post",
       body: JSON.stringify({ email: username, password: password }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
+      credentials: "include",
     });
     if (response?.status === 200) {
       localStorage.setItem("userName", username);
-      props.onLogin(username);
+      onLogin(username);
     } else {
       const body = await response.json();
       setDisplayError(`⚠ Error: ${body.msg}`);
@@ -49,10 +52,10 @@ export function Unauthenticated({ props }) {
           }
         }}
       />
-      <button disabled={!username || !password} onClick={loginUser()}>
+      <button disabled={!username || !password} onClick={loginUser}>
         Log In
       </button>
-      <button disabled={!username || !password} onClick={registerUser()}>
+      <button disabled={!username || !password} onClick={registerUser}>
         Register
       </button>
     </div>

@@ -28,9 +28,10 @@ export default function Posts() {
         async function loadPosts() {
             try {
                 const postsData = await getPosts();
+                console.log("Posts data:", postsData);
                 setPosts(postsData);
             } catch (err) {
-                console.error("Failed to fetch posts", err);
+                console.error("Failed to fetch posts, posts.loadPosts", err);
             }
         }
         loadPosts();

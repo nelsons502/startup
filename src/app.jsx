@@ -22,7 +22,7 @@ export default function App() {
 
                     <ul>
                     <li className='nav-item'>
-                            <NavLink className='nav-link' to=''>
+                            <NavLink className='nav-link' to='/'>
                             Login
                             </NavLink>
                         </li>
@@ -46,12 +46,25 @@ export default function App() {
                             </NavLink>
                         </li>
                     </ul>
-                    {/* This button is being temporarily removed
-                    <div className="auth-button">
-                        <button onClick={handleAuthClick}>
-                            {isLoggedIn ? "Logout" : "Login"}
+                    <div className='auth-button'>
+                        <button
+                            onClick={() => {
+                                if (authState === AuthState.Authenticated) {
+                                    setAuthState(AuthState.Unauthenticated);
+                                    setUserName('');
+                                    localStorage.removeItem('userName');
+                                    fetch('/api/auth/logout', { method: 'delete' })
+                                        .catch(() => {})
+                                        .finally(() => {
+                                            // update the window back to the login page
+                                            window.location.href = '/';
+                                        });
+                                }
+                            }}
+                        >
+                            {authState === AuthState.Authenticated ? 'Logout' : 'Login'}
                         </button>
-                    </div>*/}
+                    </div>
                 </nav>
             </header>
 
