@@ -1,6 +1,3 @@
-// future backend interaction (fetch, like, download, etc)
-import React from "react";
-
 export async function getPosts() {
     const res = await fetch("/api/posts", { credentials: "include" });
     if (!res.ok) {

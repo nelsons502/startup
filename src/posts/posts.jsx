@@ -5,8 +5,6 @@ import "./posts.css";
 
 
 export default function Posts() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [authChecked, setAuthChecked] = useState(false);
     const [visibleCount, setVisibleCount] = useState(1);
     const [posts, setPosts] = useState([]);
     const [newPost, setNewPost] = useState({
@@ -27,21 +25,6 @@ export default function Posts() {
     };
 
     useEffect(() => {
-        async function checkLogin() {
-            try {
-                const res = await fetch("/api/user/me", { credentials: "include" });
-                setIsLoggedIn(res.ok);
-            } catch {
-                setIsLoggedIn(false);
-            } finally {
-                setAuthChecked(true);
-            }
-        }
-        checkLogin();
-    }, []);
-
-    useEffect(() => {
-        if (!isLoggedIn) return;
         async function loadPosts() {
             try {
                 const postsData = await getPosts();
@@ -51,27 +34,7 @@ export default function Posts() {
             }
         }
         loadPosts();
-    }, [isLoggedIn]);
-
-    if (!authChecked) {
-        return (
-            <main>
-                <div className="center-container">
-                    <p>Checking login status...</p>
-                </div>
-            </main>
-        );
-    }
-
-    if (!isLoggedIn) {
-        return (
-            <main>
-                <div className="center-container">
-                    <p>You must log in to use/view this feature.</p>
-                </div>
-            </main>
-        );
-    }
+    }, []);
 
     const visiblePosts = posts.slice(0, visibleCount);
 

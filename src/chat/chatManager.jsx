@@ -1,5 +1,3 @@
-import { Chat } from "./chatClass";
-
 export async function getChats() {
   const res = await fetch('/api/chats', {
     credentials: 'include',

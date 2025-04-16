@@ -2,35 +2,24 @@ import React, {useEffect, useState } from "react";
 import "./quote.css";
 
 export default function Quote() {
-    const [quote, setQuote] = useState("Loading inspirational quote...");
+    const [quote, setQuote] = useState("...");
     const [author, setAuthor] = useState("");
-
-    /*useEffect(() => {
-        async function checkLogin() {
-            try {
-                const res = await fetch("/api/user/me", { credentials: "include" });
-                setIsLoggedIn(res.ok);
-            } catch {
-                setIsLoggedIn(false);
-            }
-        }
-        checkLogin();
-    }, []);*/
 
     const getNewQuote = async () => {
         setQuote("Loading inspirational quote...");
         setAuthor("");
-    
-        try {
-            const response = await fetch("/api/quote");
-            const data = await response.json();
+        // Fetch a random quote from the API
+        fetch("/api/quote")
+        .then((response) => response.json())
+        .then((data) => {
             setQuote(data.quote);
             setAuthor(data.author);
-        } catch (error) {
+        })
+        .catch((error) => {
             console.error("Error fetching quote:", error);
             setQuote("Failed to load quote.");
             setAuthor("");
-        }
+        });
     };
 
     useEffect(() => {

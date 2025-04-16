@@ -1,71 +1,58 @@
-import React, { useState } from "react";
+import React from "react";
 
-export function Unauthenticated({ userName, onLogin, onRegister }) {
-  const [username, setUsername] = useState(userName || "");
-  const [password, setPassword] = useState("");
+export function Unauthenticated({ props }) {
+  const [username, setUsername] = React.useState(props.userName);
+  const [password, setPassword] = React.useState("");
+  const [displayError, setDisplayError] = React.useState(null);
 
-  const handleLogin = async () => {
-    try {
-      const res = await fetch('/api/auth', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({ email: username, password }),
-      });
-      if (res.ok) {
-        onLogin(username);
-      } else {
-        alert('Login failed');
-      }
-    } catch (err) {
-      console.error('Login error:', err);
-      alert('Login error');
+  async function loginUser() {
+    loginOrCreate(`/api/auth/login`);
+  }
+
+  async function registerUser() {
+    loginOrCreate(`/api/auth/register`);
+  }
+  async function loginOrCreate(endpoint) {
+    const response = await fetch(endpoint, {
+      method: "post",
+      body: JSON.stringify({ email: username, password: password }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
+    if (response?.status === 200) {
+      localStorage.setItem("userName", username);
+      props.onLogin(username);
+    } else {
+      const body = await response.json();
+      setDisplayError(`⚠ Error: ${body.msg}`);
     }
-  };
-
-  const handleRegister = async () => {
-    try {
-      const res = await fetch('/api/auth', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({ email: username, password }),
-      });
-      if (res.ok) {
-        onRegister(username);
-      } else {
-        alert('Registration failed');
-      }
-    } catch (err) {
-      console.error('Registration error:', err);
-      alert('Registration error');
-    }
-  };
+  }
 
   return (
     <div className="center-container">
       <h2>Please Log In</h2>
       <input
         type="text"
-        placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
+        placeholder="your@email.com"
       />
       <input
         type="password"
-        placeholder="Password"
+        placeholder="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
-            handleLogin();
+            loginUser();
           }
         }}
       />
-      <button disabled={!username || !password} onClick={handleLogin}>
+      <button disabled={!username || !password} onClick={loginUser()}>
         Log In
       </button>
-      <button disabled={!username || !password} onClick={handleRegister}>
+      <button disabled={!username || !password} onClick={registerUser()}>
         Register
       </button>
     </div>

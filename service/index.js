@@ -89,22 +89,24 @@ let chats = [
   }
 ];
 
+let router = express.Router();
+app.use('/api', router);
 
 /* ========= AUTH ========= */
 
 // Register
-app.post('/api/auth', async (req, res) => {
-  const { email, password } = req.body;
-  if (await getUser('email', email)) {
+router.post('/auth/register', async (req, res) => {
+  if (await getUser('email', req.body.email)) {
     return res.status(409).send({ msg: 'Existing user' });
+  } else {
+    const user = await createUser(req.body.email, req.body.password);
+    setAuthCookie(res, user);
+    return res.send({ email: user.email });
   }
-  const user = await createUser(email, password);
-  setAuthCookie(res, user);
-  res.send({ email: user.email });
 });
 
 // Login
-app.put('/api/auth', async (req, res) => {
+router.put('/auth/login', async (req, res) => {
   const { email, password } = req.body;
   const user = await getUser('email', email);
   if (user && await bcrypt.compare(password, user.password)) {
@@ -116,39 +118,23 @@ app.put('/api/auth', async (req, res) => {
 });
 
 // Logout
-app.delete('/api/auth', async (req, res) => {
+router.delete('/auth/logout', async (req, res) => {
   const token = req.cookies[authCookieName];
   const user = await getUser('token', token);
   if (user) delete user.token;
   res.clearCookie(authCookieName);
-  res.send({});
-});
-
-// Get current user
-app.get('/api/user/me', async (req, res) => {
-  const token = req.cookies[authCookieName];
-  const user = await getUser('token', token);
-  user ? res.send({ email: user.email }) : res.status(401).send({ msg: 'Unauthorized' });
+  res.status(204).end();
 });
 
 /* ========= POSTS ========= */
 
 // Get all posts
-app.get('/api/posts', verifyAuth, (req, res) => {
-  const token = req.cookies[authCookieName];
-  const user = users.find(u => u.token === token);
-  const email = user?.email;
-
-  const enrichedPosts = posts.map(post => ({
-    ...post,
-    likedByUser: post.likedBy.includes(email)
-  }));
-
-  res.send(enrichedPosts);
+router.get('/posts', verifyAuth, (req, res) => {
+  res.send(posts); // any logged-in user can see all posts
 });
 
 // Create a new post
-app.post('/api/posts', verifyAuth, (req, res) => {
+router.post('/posts', verifyAuth, (req, res) => {
   const post = {
     id: uuid.v4(),
     title: req.body.title,
@@ -158,20 +144,21 @@ app.post('/api/posts', verifyAuth, (req, res) => {
     type: req.body.type,
     timestamp: new Date().toISOString(),
     likes: 0,
+    owner: req.body.owner,
   };
   posts.unshift(post);
   res.send(post);
 });
 
 // Like a post
-app.post('/api/posts/:id/like', verifyAuth, (req, res) => {
+router.post('/posts/:id/like', verifyAuth, (req, res) => {
   const post = posts.find(p => String(p.id) === String(req.params.id));
   if (post) {
     const token = req.cookies[authCookieName];
     const user = users.find(u => u.token === token);
-    if (!post.likedBy.includes(user.email)) {
-    post.likedBy.push(user.email);
-    post.likes++;
+    if (!post.likedBy.includes(user.email)) { // make sure user can only like once
+        post.likedBy.push(user.email);
+        post.likes++;
     }
     res.send({ likes: post.likes });
   } else {
@@ -180,8 +167,8 @@ app.post('/api/posts/:id/like', verifyAuth, (req, res) => {
 });
 
 // Download post code
-app.get('/api/posts/:id/download', verifyAuth, (req, res) => {
-    const post = posts.find(p => String(p.id) === String(req.params.id));
+router.get('/posts/:id/download', verifyAuth, (req, res) => {
+  const post = posts.find(p => String(p.id) === String(req.params.id));
   if (!post) return res.status(404).send({ msg: 'Post not found' });
 
   const filename = `${post.title.toLowerCase().replace(/\s+/g, '_')}.${extByType(post.type)}`;
@@ -191,21 +178,23 @@ app.get('/api/posts/:id/download', verifyAuth, (req, res) => {
 });
 
 // Get single post
-app.get('/api/posts/:id', verifyAuth, (req, res) => {
+router.get('/posts/:id', verifyAuth, (req, res) => {
   const post = posts.find(p => p.id === req.params.id);
   if (!post) return res.status(404).send({ msg: 'Post not found' });
 
   const token = req.cookies[authCookieName];
   const user = users.find(u => u.token === token);
-  const likedByUser = post.likedBy.includes(user.email);
-
-  res.send({ ...post, likedByUser });
+  // if owner, user can see all details
+  if (post.owner === user.email) return res.send(post);
+  // if not owner, user can only see title, content, timestamp, likes
+  const { title, content, timestamp, likes } = post;
+  res.send({ title, content, timestamp, likes });
 });
 
 /* ========= CHATS ========= */
 
-// Get all chats
-app.get('/api/chats', verifyAuth, (req, res) => {
+// Get all chats by user
+router.get('/chats', verifyAuth, (req, res) => {
   const token = req.cookies[authCookieName];
   const user = users.find(u => u.token === token);
   const userChats = chats.filter(c => c.owner === user.email);
@@ -213,13 +202,17 @@ app.get('/api/chats', verifyAuth, (req, res) => {
 });
 
 // Get single chat
-app.get('/api/chats/:id', verifyAuth, (req, res) => {
+router.get('/chats/:id', verifyAuth, (req, res) => {
   const chat = chats.find(c => c.id === req.params.id);
-  chat ? res.send(chat) : res.status(404).send({ msg: 'Chat not found' });
+  const token = req.cookies[authCookieName];
+  const user = users.find(u => u.token === token);
+  if (chat && chat.owner === user.email) return res.send(chat);
+  // if not owner, user can only see title, messages, createdAt, updatedAt
+  return res.status(403).send({ msg: 'Forbidden' });
 });
 
 // Create new chat
-app.post('/api/chats', verifyAuth, (req, res) => {
+router.post('/chats', verifyAuth, (req, res) => {
   const token = req.cookies[authCookieName];
   const user = users.find(u => u.token === token);
   const chat = {
@@ -234,8 +227,29 @@ app.post('/api/chats', verifyAuth, (req, res) => {
   res.send(chat);
 });
 
+// Change chat title
+router.put('/chats/:id/title', verifyAuth, (req, res) => {
+    const chat = chats.find(c => c.id === req.params.id);
+    if (!chat) return res.status(404).send({ msg: 'Chat not found' });
+    
+    chat.title = req.body.title;
+    chat.updatedAt = new Date().toISOString();
+    res.send(chat);
+    }
+);
+
+// Delete chat
+router.delete('/chats/:id', verifyAuth, (req, res) => {
+  const chatIndex = chats.findIndex(c => c.id === req.params.id);
+  if (chatIndex !== -1) {
+    chats.splice(chatIndex, 1);
+    return res.status(204).end();
+  }
+  res.status(404).send({ msg: 'Chat not found' });
+});
+
 // Add message to chat
-app.post('/api/chats/:id/message', verifyAuth, (req, res) => {
+router.post('/chats/:id/message', verifyAuth, (req, res) => {
   const chat = chats.find(c => c.id === req.params.id);
   if (!chat) return res.status(404).send({ msg: 'Chat not found' });
 
@@ -259,7 +273,7 @@ app.post('/api/chats/:id/message', verifyAuth, (req, res) => {
 /* ========= QUOTES ========= */
 
 // Proxy to external quote API
-app.get('/api/quote', async (_req, res) => {
+router.get('/quote', async (_req, res) => {
   try {
     const r = await fetch('https://dummyjson.com/quotes/random');
     const q = await r.json();
@@ -267,6 +281,16 @@ app.get('/api/quote', async (_req, res) => {
   } catch {
     res.status(500).send({ msg: 'Quote fetch failed' });
   }
+});
+
+/* ========= DEFAULT ERROR HANDLER ========= */
+app.use(function(err, req, res, next) {
+  res.status(500).send({ type: err.name, message: err.message });
+});
+
+/* ========= DEFAULT PAGE ========= */
+app.use((_req, res) => {
+  res.sendFile('index.html', { root: 'public' });
 });
 
 /* ========= UTILITIES ========= */
@@ -307,4 +331,4 @@ function extByType(type) {
   }
 }
 
-app.listen(PORT, () => console.log(`🛡️  Server running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
