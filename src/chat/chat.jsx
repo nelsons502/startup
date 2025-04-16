@@ -10,10 +10,27 @@ import {
 } from "./chatManager";
 
 export default function Chat() {
-  const [userEmail, setUserEmail] = useState(localStorage.getItem("userEmail"));
+  const [userEmail, setUserEmail] = useState('');
   const [chats, setChats] = useState([]);
   const [currentChatId, setCurrentChatId] = useState(null);
   const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        const res = await fetch('/api/user/me', { credentials: 'include' });
+        if (res.ok) {
+          const data = await res.json();
+          setUserEmail(data.email);
+        } else {
+          console.error('Unauthorized access or user not logged in');
+        }
+      } catch (err) {
+        console.error('Error fetching user info:', err);
+      }
+    }
+    fetchUser();
+  }, []);
 
   useEffect(() => {
     async function loadChats() {

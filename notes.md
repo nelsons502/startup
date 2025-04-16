@@ -51,3 +51,5 @@ I will probably add an `About` page to my site eventually. For now, the 4 pages 
 I learned a ton about Express and Node.js! Just as I was starting to really like Javascript and appreciate all the awesome things it can do, I learned that it can be my backend code as well! There was definitely a lot more Promises and `async` functions in this deliverable than the last one. It was very fun to get a server up and running in my development environment. I'm very proud of the code that is working to get reponses from the API and save them to the server. I think the best feature is (and will continue to be) the Posts. It isn't as "cool" as the AI, but I want it to become something that really builds a sense of community into Focus Coding.
 
 I'm about to deploy my server to the internet. I pray everything goes smootly with that. 
+
+Wow, that took much longer than I thought! I had to really get down into the dirt with my code and take away anything that wasn't absolutely necessary! It works now though! (If imperfectly.)

@@ -46,25 +46,7 @@ export default function App() {
                             </NavLink>
                         </li>
                     </ul>
-                    <div className='auth-button'>
-                        <button
-                            onClick={() => {
-                                if (authState === AuthState.Authenticated) {
-                                    setAuthState(AuthState.Unauthenticated);
-                                    setUserName('');
-                                    localStorage.removeItem('userName');
-                                    fetch('/api/auth/logout', { method: 'delete' })
-                                        .catch(() => {})
-                                        .finally(() => {
-                                            // update the window back to the login page
-                                            window.location.href = '/';
-                                        });
-                                }
-                            }}
-                        >
-                            {authState === AuthState.Authenticated ? 'Logout' : 'Login'}
-                        </button>
-                    </div>
+                    
                 </nav>
             </header>
 
