@@ -15,7 +15,7 @@ export async function getChatById(chatId) {
     credentials: 'include',
   });
   if (!res.ok) {
-    throw new Error('Failed to fetch chat');
+    throw new Error('Failed to fetch chat: getChatById');
   }
   return await res.json();
 }
@@ -24,11 +24,14 @@ export async function createNewChat() {
   const res = await fetch('/api/chats', {
     method: 'POST',
     credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title: 'New Chat' }),
   });
   if (!res.ok) {
     throw new Error('Failed to create new chat');
   }
-  return await res.json();
+  const newChat = await res.json();
+  return newChat;
 }
 
 export async function addMessageToChat(chatId, message) {
@@ -39,36 +42,9 @@ export async function addMessageToChat(chatId, message) {
     body: JSON.stringify(message),
   });
   if (!res.ok) {
-    throw new Error('Failed to add message to chat');
+    throw new Error('Failed to add message to chat: addMessageToChat');
   }
-  return await res.json();
+
+  const updatedChat = await res.json();
+  return updatedChat;
 }
-
-/*
-export function createNewChat() {
-  const chats = loadChats();
-  const num = chats.length + 1;
-  const newChat = new Chat(num);
-  chats.unshift(newChat);
-  saveChats(chats);
-  return newChat;
-}
-
-export function addMessageToChat(chatId, message) {
-  const chats = loadChats();
-  const chatIndex = chats.findIndex(chat => chat.id === chatId);
-  if (chatIndex === -1) return;
-
-  const chat = chats[chatIndex];
-  const updatedChat = new Chat();
-  Object.assign(updatedChat, chat);  // revive class methods
-  updatedChat.addMessage(message);
-  updatedChat.update();
-
-  // Remove old position and move to top
-  chats.splice(chatIndex, 1);
-  chats.unshift(updatedChat);
-
-  saveChats(chats);
-}
-  */

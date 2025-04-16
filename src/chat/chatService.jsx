@@ -36,12 +36,35 @@ function formatMessagesForAPI(messages) {
 }
 
 export async function sendMessageToServer(chatId, message) {
-    // TODO: POST message to your server's /chats/:id/messages
-    console.log("Sending message to server:", { chatId, message });
+    const response = await fetch(`/api/chats/${chatId}/message`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({ content: message })
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to send message to server");
+    }
+
+    return await response.json();
 }
 
 export async function createChatOnServer(title) {
-    // TODO: POST to /chats with title
-    console.log("Creating new chat on server:", title);
-    return { id: Date.now(), title, messages: [] }; // placeholder
+    const response = await fetch(`/api/chats`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({ title })
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to create chat on server");
+    }
+
+    return await response.json();
 }

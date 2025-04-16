@@ -10,7 +10,7 @@ export default function PostCard({ post }) {
       const updatedLikes = await likePost(post.id);
       setLikes(updatedLikes);
     } catch (err) {
-      console.error("Failed to like post", err);
+      console.error("Failed to like post: postCard error", err);
     }
   };
 

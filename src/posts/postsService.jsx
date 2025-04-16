@@ -16,7 +16,7 @@ export async function likePost(postId) {
     });
 
     if (!res.ok) {
-        throw new Error("Failed to like post");
+        throw new Error("Failed to like post: postsService error");
     }
 
     const updatedPost = await res.json();
@@ -24,24 +24,18 @@ export async function likePost(postId) {
 }
 
 export async function downloadPost(postId) {
-    const res = await fetch(`/api/posts/${postId}`, {
+    console.log("Downloading post with ID:", postId);
+    const res = await fetch(`/api/posts/${postId}/download`, {
         credentials: "include"
     });
     if (!res.ok) return;
 
-    const post = await res.json();
+    const postInfo = await res.json();
+    console.log("Post info:", postInfo);
 
-    const fileExtensions = {
-        "python": "py",
-        "javascript": "js",
-        "java": "java",
-        "c++": "cpp"
-    };
+    const fileName = postInfo.filename;
 
-    const extension = fileExtensions[post.type.toLowerCase()] || "txt";
-    const fileName = post.title.toLowerCase().replace(/\s+/g, "_") + "." + extension;
-
-    const blob = new Blob([post.code], { type: "text/plain" });
+    const blob = new Blob([postInfo.code], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
 
     const link = document.createElement("a");

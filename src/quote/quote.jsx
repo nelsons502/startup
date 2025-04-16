@@ -2,24 +2,29 @@ import React, {useEffect, useState } from "react";
 import "./quote.css";
 
 export default function Quote() {
-    const username = localStorage.getItem("username");
-    if (!username) {
-        return (
-            <main>
-                <div className="center-container">
-                    <p>You must log in to use/view this feature.</p>
-                </div>
-            </main>
-        );
-    }
-    
     const [quote, setQuote] = useState("Loading inspirational quote...");
     const [author, setAuthor] = useState("");
 
+    useEffect(() => {
+        async function checkLogin() {
+            try {
+                const res = await fetch("/api/user/me", { credentials: "include" });
+                setIsLoggedIn(res.ok);
+            } catch {
+                setIsLoggedIn(false);
+            } finally {
+                setAuthChecked(true);
+            }
+        }
+        checkLogin();
+    }, []);
+
     const getNewQuote = async () => {
-        //console.log("fetching quotes");
+        setQuote("Loading inspirational quote...");
+        setAuthor("");
+    
         try {
-            const response = await fetch("https://dummyjson.com/quotes/random"); // TODO: change to https://zenquotes.io/ when I get the server running (requires server to implement)
+            const response = await fetch("/api/quote");
             const data = await response.json();
             setQuote(data.quote);
             setAuthor(data.author);
@@ -32,6 +37,8 @@ export default function Quote() {
 
     useEffect(() => {
         getNewQuote();
+        const interval = setInterval(getNewQuote, 60000); // every 60 seconds
+        return () => clearInterval(interval); // cleanup
     }, []);
 
     return (

@@ -11,7 +11,18 @@ app.use(express.static('public'));
 
 const authCookieName = 'token';
 // include default values for the users, posts, and chats arrays
-let users = [{email: "bruce@wayne.com", password: bcrypt.hashSync("darkknight", 10), token: "robin"}];
+let users = [
+    {
+        email: "bruce@wayne.com", 
+        password: bcrypt.hashSync("darkknight", 10), 
+        token: "robin"
+    },
+    {
+        email: "bob",
+        password: bcrypt.hashSync("hi", 10),
+        token: "default"
+    }
+];
 let posts = [
     {
         id: 1,
@@ -74,6 +85,7 @@ let chats = [
     ],
     createdAt: '2023-10-01T12:00:00Z',
     updatedAt: '2023-10-01T12:01:00Z',
+    owner: 'bruce@wayne.com',
   }
 ];
 
@@ -153,13 +165,13 @@ app.post('/api/posts', verifyAuth, (req, res) => {
 
 // Like a post
 app.post('/api/posts/:id/like', verifyAuth, (req, res) => {
-  const post = posts.find(p => p.id === req.params.id);
+  const post = posts.find(p => String(p.id) === String(req.params.id));
   if (post) {
     const token = req.cookies[authCookieName];
     const user = users.find(u => u.token === token);
     if (!post.likedBy.includes(user.email)) {
-      post.likedBy.push(user.email);
-      post.likes++;
+    post.likedBy.push(user.email);
+    post.likes++;
     }
     res.send({ likes: post.likes });
   } else {
@@ -169,13 +181,13 @@ app.post('/api/posts/:id/like', verifyAuth, (req, res) => {
 
 // Download post code
 app.get('/api/posts/:id/download', verifyAuth, (req, res) => {
-  const post = posts.find(p => p.id === req.params.id);
+    const post = posts.find(p => String(p.id) === String(req.params.id));
   if (!post) return res.status(404).send({ msg: 'Post not found' });
 
   const filename = `${post.title.toLowerCase().replace(/\s+/g, '_')}.${extByType(post.type)}`;
   res.setHeader('Content-disposition', `attachment; filename=${filename}`);
   res.setHeader('Content-Type', 'text/plain');
-  res.send(post.code);
+  res.send({ code: post.code, filename: filename });
 });
 
 // Get single post
@@ -193,7 +205,12 @@ app.get('/api/posts/:id', verifyAuth, (req, res) => {
 /* ========= CHATS ========= */
 
 // Get all chats
-app.get('/api/chats', verifyAuth, (_req, res) => res.send(chats));
+app.get('/api/chats', verifyAuth, (req, res) => {
+  const token = req.cookies[authCookieName];
+  const user = users.find(u => u.token === token);
+  const userChats = chats.filter(c => c.owner === user.email);
+  res.send(userChats);
+});
 
 // Get single chat
 app.get('/api/chats/:id', verifyAuth, (req, res) => {
@@ -203,12 +220,15 @@ app.get('/api/chats/:id', verifyAuth, (req, res) => {
 
 // Create new chat
 app.post('/api/chats', verifyAuth, (req, res) => {
+  const token = req.cookies[authCookieName];
+  const user = users.find(u => u.token === token);
   const chat = {
     id: uuid.v4(),
     title: req.body.title || "New Chat",
     messages: [],
     createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
+    updatedAt: new Date().toISOString(),
+    owner: user.email
   };
   chats.unshift(chat);
   res.send(chat);
@@ -216,6 +236,7 @@ app.post('/api/chats', verifyAuth, (req, res) => {
 
 // Add message to chat
 app.post('/api/chats/:id/message', verifyAuth, (req, res) => {
+  console.log(req.body);
   const chat = chats.find(c => c.id === req.params.id);
   if (!chat) return res.status(404).send({ msg: 'Chat not found' });
 
@@ -228,6 +249,12 @@ app.post('/api/chats/:id/message', verifyAuth, (req, res) => {
   chat.messages.push(msg);
   chat.updatedAt = new Date().toISOString();
   res.send(chat);
+  // Move the updated chat to the top
+  const chatIndex = chats.findIndex(c => c.id === req.params.id);
+  if (chatIndex !== -1) {
+    const updated = chats.splice(chatIndex, 1)[0];
+    chats.unshift(updated);
+  }
 });
 
 /* ========= QUOTES ========= */
@@ -237,7 +264,7 @@ app.get('/api/quote', async (_req, res) => {
   try {
     const r = await fetch('https://dummyjson.com/quotes/random');
     const q = await r.json();
-    res.send({ content: q.quote, author: q.author });
+    res.send({ quote: q.quote, author: q.author });
   } catch {
     res.status(500).send({ msg: 'Quote fetch failed' });
   }

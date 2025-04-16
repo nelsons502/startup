@@ -12,12 +12,12 @@ export default function ChatBox({ onNewMessage }) {
     onNewMessage(userMessage);
 
     setLoading(true);
+    setInput("");
     const aiReply = await sendMessageToAI([userMessage]);
     setLoading(false);
 
     const aiMessage = { role: "assistant", content: aiReply };
     onNewMessage(aiMessage);
-    setInput("");
   };
 
   return (

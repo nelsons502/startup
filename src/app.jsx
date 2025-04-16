@@ -39,10 +39,8 @@ export default function App() {
                 console.error("Logout failed:", err);
             }
             setIsLoggedIn(false);
-            window.dispatchEvent(new Event("authChange"));
-        } else {
-            window.location.href = "/login";
         }
+        window.location.href = "/login";
     };
 
     return (

@@ -44,6 +44,7 @@ export default function LoginWrapper() {
         <Unauthenticated
           userName={userName}
           onLogin={(name) => handleAuthChange(name, AuthState.Authenticated)}
+          onRegister={(name) => handleAuthChange(name, AuthState.Authenticated)}
         />
       )}
     </main>

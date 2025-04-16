@@ -12,6 +12,7 @@ import {
 export default function Chat() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [authChecked, setAuthChecked] = useState(false);
+  const [userEmail, setUserEmail] = useState(null);
   const [chats, setChats] = useState([]);
   const [currentChatId, setCurrentChatId] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -20,31 +21,40 @@ export default function Chat() {
     async function checkLogin() {
       try {
         const res = await fetch("/api/user/me", { credentials: "include" });
-        setIsLoggedIn(res.ok);
+        if (res.ok) {
+          const data = await res.json();
+          setIsLoggedIn(true);
+          setUserEmail(data.email);
+        } else {
+          setIsLoggedIn(false);
+        }
       } catch {
         setIsLoggedIn(false);
       } finally {
         setAuthChecked(true);
       }
     }
-    checkLogin(); // initial load
+    checkLogin();
   }, []);
 
   useEffect(() => {
     async function loadChats() {
       try {
         const loadedChats = await getChats();
-        setChats(loadedChats);
-        if (loadedChats.length > 0) {
-          setCurrentChatId(loadedChats[0].id);
-          setMessages(loadedChats[0].messages);
+        const userChats = loadedChats.filter(chat => chat.owner === userEmail);
+        setChats(userChats);
+        if (userChats.length > 0) {
+          setCurrentChatId(userChats[0].id);
+          setMessages(userChats[0].messages);
         }
       } catch (err) {
         console.error("Failed to load chats", err);
       }
     }
-    loadChats();
-  }, []);
+    if (userEmail) {
+      loadChats();
+    }
+  }, [userEmail]);
 
   useEffect(() => {
     async function loadChatMessages() {
@@ -53,14 +63,14 @@ export default function Chat() {
           const chat = await getChatById(currentChatId);
           setMessages(chat ? chat.messages : []);
         } catch (err) {
-          console.error("Failed to fetch chat", err);
+          console.error("Failed to fetch chat: loadChatMessages", err);
           setMessages([]);
         }
       }
     }
     loadChatMessages();
   }, [currentChatId]);
-  
+
   if (!authChecked) {
     return (
       <main>
@@ -86,18 +96,18 @@ export default function Chat() {
     try {
       await addMessageToChat(currentChatId, msg);
     } catch (err) {
-      console.error("Failed to add message", err);
+      console.error("Failed to add message: handleNewMessage", err);
     }
   };
 
   const handleNewChat = async () => {
     try {
-      const newChat = await createNewChat();
+      const newChat = await createNewChat(userEmail);
       setChats([newChat, ...chats]);
       setCurrentChatId(newChat.id);
       setMessages([]);
     } catch (err) {
-      console.error("Failed to create new chat", err);
+      console.error("Failed to create new chat: handleNewChat", err);
     }
   };
 

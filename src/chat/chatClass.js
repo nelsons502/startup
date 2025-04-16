@@ -1,13 +1,11 @@
-// Reusable Chat component
-
-
 export class Chat {
-    constructor(num) {
+    constructor(num, owner) {
         this.id = Date.now();
         this.title = "Chat " + num;
         this.createdAt = formatted_date();
         this.updatedAt = formatted_date();
         this.messages = [];
+        this.owner = owner; // new field to associate chat with user
     }
     addMessage(message) {
         this.messages.push(message);
