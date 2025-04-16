@@ -32,11 +32,11 @@ router.post('/auth/register', async (req, res) => {
 
 // Login
 router.put('/auth/login', async (req, res) => {
-  console.log(req.body);
   const { email, password } = req.body;
   const user = await getUser('email', email);
   if (user && await bcrypt.compare(password, user.password)) {
     user.token = uuid.v4();
+    await DB.updateUser(user); // make sure to update DB
     setAuthCookie(res, user);
     return res.send({ email: user.email });
   }
@@ -47,7 +47,10 @@ router.put('/auth/login', async (req, res) => {
 router.delete('/auth/logout', async (req, res) => {
   const token = req.cookies[authCookieName];
   const user = await getUser('token', token);
-  if (user) delete user.token;
+  if (user) {
+    delete user.token;
+    await DB.updateUser(user); // make sure to update DB
+  }
   res.clearCookie(authCookieName);
   res.status(204).end();
 });
@@ -57,6 +60,8 @@ router.delete('/auth/logout', async (req, res) => {
 // Get all posts
 router.get('/posts', verifyAuth, (req, res) => {
   console.log('getting all posts, server');
+  const posts = DB.getAllPosts();
+  if (!posts) return res.status(404).send({ msg: 'Posts not found' });
   res.send(posts); // any logged-in user can see all posts
 });
 
@@ -73,17 +78,19 @@ router.post('/posts', verifyAuth, (req, res) => {
     likes: 0,
     owner: req.body.owner,
   };
-  posts.unshift(post);
+  DB.addPost(post);
   res.send(post);
 });
 
 // Like a post
 router.post('/posts/:id/like', verifyAuth, (req, res) => {
-  const post = posts.find(p => String(p.id) === String(req.params.id));
+  const post = DB.getPostById(req.params.id);
   if (post) {
     const token = req.cookies[authCookieName];
-    const user = users.find(u => u.token === token);
-    if (!post.likedBy.includes(user.email)) { // make sure user can only like once
+    const user = DB.getUserByToken(token);
+    if (!user) return res.status(401).send({ msg: 'Unauthorized' });
+    // if user is already in likedBy, do not increase likes
+    if (!post.likedBy.includes(user.email)) { // user can "like" only once
         post.likedBy.push(user.email);
         post.likes++;
     }
@@ -95,7 +102,7 @@ router.post('/posts/:id/like', verifyAuth, (req, res) => {
 
 // Download post code
 router.get('/posts/:id/download', verifyAuth, (req, res) => {
-  const post = posts.find(p => String(p.id) === String(req.params.id));
+  const post = DB.getPostById(req.params.id);
   if (!post) return res.status(404).send({ msg: 'Post not found' });
 
   const filename = `${post.title.toLowerCase().replace(/\s+/g, '_')}.${extByType(post.type)}`;
@@ -106,11 +113,12 @@ router.get('/posts/:id/download', verifyAuth, (req, res) => {
 
 // Get single post
 router.get('/posts/:id', verifyAuth, (req, res) => {
-  const post = posts.find(p => p.id === req.params.id);
+  const post = DB.getPostById(req.params.id);
   if (!post) return res.status(404).send({ msg: 'Post not found' });
 
   const token = req.cookies[authCookieName];
-  const user = users.find(u => u.token === token);
+  const user = DB.getUserByToken(token);
+  if (!user) return res.status(401).send({ msg: 'Unauthorized' });
   // if owner, user can see all details
   if (post.owner === user.email) return res.send(post);
   // if not owner, user can only see title, content, timestamp, likes
@@ -123,17 +131,24 @@ router.get('/posts/:id', verifyAuth, (req, res) => {
 // Get all chats by user
 router.get('/chats', verifyAuth, (req, res) => {
   const token = req.cookies[authCookieName];
-  const user = users.find(u => u.token === token);
-  const userChats = chats.filter(c => c.owner === user.email);
+  const user = DB.getUserByToken(token);
+  const userChats = DB.getChatsByUser(user.email);
+  if (!userChats) return res.status(404).send({ msg: 'Chats not found' });
+  // sort chats by updatedAt
+  userChats.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+  // limit to 10 chats
+  userChats.length = Math.min(userChats.length, 10);
   res.send(userChats);
 });
 
 // Get single chat
 router.get('/chats/:id', verifyAuth, (req, res) => {
-  const chat = chats.find(c => c.id === req.params.id);
+  const chat = DB.getChatById(req.params.id);
+  if (!chat) return res.status(404).send({ msg: 'Chat not found' });
+  // if owner, user can see all details
   const token = req.cookies[authCookieName];
-  const user = users.find(u => u.token === token);
-  if (chat && chat.owner === user.email) return res.send(chat);
+  const user = DB.getUserByToken(token);
+  if (chat.owner === user.email) return res.send(chat);
   // if not owner, user can only see title, messages, createdAt, updatedAt
   return res.status(403).send({ msg: 'Forbidden' });
 });
@@ -141,7 +156,11 @@ router.get('/chats/:id', verifyAuth, (req, res) => {
 // Create new chat
 router.post('/chats', verifyAuth, (req, res) => {
   const token = req.cookies[authCookieName];
-  const user = users.find(u => u.token === token);
+  const user = DB.getUserByToken(token);
+  if (!user) return res.status(401).send({ msg: 'Unauthorized' });
+  // if user is not owner, do not create chat
+  if (user.email !== req.body.owner) return res.status(403).send({ msg: 'Forbidden' });
+  // if user is owner, create chat
   const chat = {
     id: uuid.v4(),
     title: req.body.title || "New Chat",
@@ -150,36 +169,43 @@ router.post('/chats', verifyAuth, (req, res) => {
     updatedAt: new Date().toISOString(),
     owner: user.email
   };
-  chats.unshift(chat);
+  DB.addChat(chat);
   res.send(chat);
 });
 
 // Change chat title
 router.put('/chats/:id/title', verifyAuth, (req, res) => {
-    const chat = chats.find(c => c.id === req.params.id);
+    const chat = DB.getChatById(req.params.id);
     if (!chat) return res.status(404).send({ msg: 'Chat not found' });
-    
+    const token = req.cookies[authCookieName];
+    const user = DB.getUserByToken(token);
+    if (!user) return res.status(401).send({ msg: 'Unauthorized' });
+    // if user is not owner, do not change title
+    if (chat.owner !== user.email) return res.status(403).send({ msg: 'Forbidden' });
+    // if user is owner, change title
     chat.title = req.body.title;
     chat.updatedAt = new Date().toISOString();
+    DB.updateChat(chat);
     res.send(chat);
     }
 );
 
 // Delete chat
 router.delete('/chats/:id', verifyAuth, (req, res) => {
-  const chatIndex = chats.findIndex(c => c.id === req.params.id);
-  if (chatIndex !== -1) {
-    chats.splice(chatIndex, 1);
-    return res.status(204).end();
-  }
-  res.status(404).send({ msg: 'Chat not found' });
+  DB.deleteChat(req.params.id);
+  res.status(204).end();
 });
 
 // Add message to chat
 router.post('/chats/:id/message', verifyAuth, (req, res) => {
-  const chat = chats.find(c => c.id === req.params.id);
+  const chat = DB.getChatById(req.params.id);
   if (!chat) return res.status(404).send({ msg: 'Chat not found' });
-
+  const token = req.cookies[authCookieName];
+  const user = DB.getUserByToken(token);
+  if (!user) return res.status(401).send({ msg: 'Unauthorized' });
+  // if user is not owner, do not add message
+  if (chat.owner !== user.email) return res.status(403).send({ msg: 'Forbidden' });
+  // if user is owner, add message
   const msg = {
     role: req.body.role,
     content: req.body.content,
@@ -188,13 +214,8 @@ router.post('/chats/:id/message', verifyAuth, (req, res) => {
 
   chat.messages.push(msg);
   chat.updatedAt = new Date().toISOString();
+  DB.updateChat(chat);
   res.send(chat);
-  // Move the updated chat to the top
-  const chatIndex = chats.findIndex(c => c.id === req.params.id);
-  if (chatIndex !== -1) {
-    const updated = chats.splice(chatIndex, 1)[0];
-    chats.unshift(updated);
-  }
 });
 
 /* ========= QUOTES ========= */
