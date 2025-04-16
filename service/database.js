@@ -53,6 +53,23 @@ function updatePost(post) {
   return postCollection.updateOne({ id: post.id }, { $set: post });
 }
 
+function deletePost(post) {
+  return postCollection.deleteOne({ id: post.id });
+}
+
+function likePost(postId, userEmail) {
+  return postCollection.updateOne(
+    { id: postId },
+    { $addToSet: { likedBy: userEmail }, $inc: { likes: 1 } }
+  );
+}
+function downloadPostCode(postId) {
+  return postCollection.findOne({ id: postId }, { projection: { code: 1 } });
+}
+function getPostsByUser(ownerEmail) {
+  return postCollection.find({ owner: ownerEmail }).sort({ updatedAt: -1 }).toArray();
+}
+
 // Chat Functions
 function getChatsByUser(ownerEmail) {
   return chatCollection.find({ owner: ownerEmail }).sort({ updatedAt: -1 }).toArray();
@@ -83,6 +100,10 @@ module.exports = {
   getPostById,
   addPost,
   updatePost,
+  deletePost,
+  likePost,
+  downloadPostCode,
+  getPostsByUser,
   getChatsByUser,
   getChatById,
   addChat,
