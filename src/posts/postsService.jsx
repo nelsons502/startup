@@ -1,83 +1,35 @@
 // future backend interaction (fetch, like, download, etc)
 import React from "react";
 
-export const allDummyPosts = [
-  {
-    id: 1,
-    title: "Post Title 1",
-    content: "Content of the post goes here...",
-    timestamp: "2025-02-12 10:30 AM",
-    likes: 0,
-    code: "# This is dummy code\nprint('Hello, World!')",
-    type: "python",
-  },
-  {
-    id: 2,
-    title: "Post Title 2",
-    content: "Another example post content here...",
-    timestamp: "2025-02-13 11:00 AM",
-    likes: 0,
-    code: "// This is dummy code\nconsole.log('Hello, World!');",
-    type: "javascript",
-  },
-  {
-    id: 3,
-    title: "Post Title 3",
-    content: "Third post sample with simple content.",
-    timestamp: "2025-02-14 09:15 AM",
-    likes: 0,
-    code: '// This is dummy code\nclass Main {\n\tpublic static void main() {\nSystem.out.println("Hello, World!");\n}\n}',
-    type: "java",
-  },
-  {
-    id: 4,
-    title: "Post Title 4",
-    content: "More placeholder text for demonstration.",
-    timestamp: "2025-02-15 08:45 AM",
-    likes: 0,
-    code: '// This is dummy code\n#include <iostream>\nusing namespace std;\nint main() {\ncout << "Hello, World!";\nreturn 0;\n}',
-    type: "c++",
-  },
-  {
-    id: 5,
-    title: "Post Title 5",
-    content: "Yet another post with fake data.",
-    timestamp: "2025-02-16 03:20 PM",
-    likes: 0,
-    code: "# This is dummy code\nprint('Hello, World!')",
-    type: "python",
-  }
-];
-
-export async function fetchPosts() {
-    // Simulate async fetch
-    return new Promise((resolve) => {
-        setTimeout(() => resolve(allDummyPosts), 300);
-    });
-}
-
-export function hasUserLiked(postId) {
-    const likedPosts = JSON.parse(localStorage.getItem("likedPosts")) || [];
-    return likedPosts.includes(postId);
+export async function getPosts() {
+    const res = await fetch("/api/posts", { credentials: "include" });
+    if (!res.ok) {
+        throw new Error("Failed to fetch posts");
+    }
+    return await res.json();
 }
 
 export async function likePost(postId) {
-    let likedPosts = JSON.parse(localStorage.getItem("likedPosts")) || [];
-    const post = allDummyPosts.find(p => p.id === postId);
-    if (!post) return false;
+    const res = await fetch(`/api/posts/${postId}/like`, {
+        method: "POST",
+        credentials: "include"
+    });
 
-    if (!likedPosts.includes(postId)) {
-        likedPosts.push(postId);
-        localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
-        post.likes += 1;
-        return post.likes;
+    if (!res.ok) {
+        throw new Error("Failed to like post");
     }
-    return post.likes;
+
+    const updatedPost = await res.json();
+    return updatedPost.likes;
 }
 
 export async function downloadPost(postId) {
-    const post = allDummyPosts.find(p => p.id === postId);
-    if (!post) return;
+    const res = await fetch(`/api/posts/${postId}`, {
+        credentials: "include"
+    });
+    if (!res.ok) return;
+
+    const post = await res.json();
 
     const fileExtensions = {
         "python": "py",

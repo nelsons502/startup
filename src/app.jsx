@@ -11,9 +11,13 @@ export default function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        const checkLogin = () => {
-            const username = localStorage.getItem("username");
-            setIsLoggedIn(!!username);
+        const checkLogin = async () => {
+            try {
+                const res = await fetch('/api/user/me', { credentials: 'include' });
+                setIsLoggedIn(res.ok);
+            } catch {
+                setIsLoggedIn(false);
+            }
         };
     
         checkLogin(); // initial load
@@ -34,7 +38,6 @@ export default function App() {
             } catch (err) {
                 console.error("Logout failed:", err);
             }
-            localStorage.removeItem("username");
             setIsLoggedIn(false);
             window.dispatchEvent(new Event("authChange"));
         } else {

@@ -10,47 +10,95 @@ import {
 } from "./chatManager";
 
 export default function Chat() {
-  const username = localStorage.getItem("username");
-  if (!username) {
-      return (
-          <main>
-              <div className="center-container">
-                  <p>You must log in to use/view this feature.</p>
-              </div>
-          </main>
-      );
-  }
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [authChecked, setAuthChecked] = useState(false);
   const [chats, setChats] = useState([]);
   const [currentChatId, setCurrentChatId] = useState(null);
   const [messages, setMessages] = useState([]);
-
+  
   useEffect(() => {
-    const loadedChats = getChats();
-    setChats(loadedChats);
-    if (loadedChats.length > 0) {
-      setCurrentChatId(loadedChats[0].id);
-      setMessages(loadedChats[0].messages);
+    async function checkLogin() {
+      try {
+        const res = await fetch("/api/user/me", { credentials: "include" });
+        setIsLoggedIn(res.ok);
+      } catch {
+        setIsLoggedIn(false);
+      } finally {
+        setAuthChecked(true);
+      }
     }
+    checkLogin(); // initial load
   }, []);
 
   useEffect(() => {
-    if (currentChatId) {
-      const chat = getChatById(currentChatId);
-      setMessages(chat ? chat.messages : []);
+    async function loadChats() {
+      try {
+        const loadedChats = await getChats();
+        setChats(loadedChats);
+        if (loadedChats.length > 0) {
+          setCurrentChatId(loadedChats[0].id);
+          setMessages(loadedChats[0].messages);
+        }
+      } catch (err) {
+        console.error("Failed to load chats", err);
+      }
     }
-  }, [currentChatId]);
+    loadChats();
+  }, []);
 
-  const handleNewMessage = (msg) => {
+  useEffect(() => {
+    async function loadChatMessages() {
+      if (currentChatId) {
+        try {
+          const chat = await getChatById(currentChatId);
+          setMessages(chat ? chat.messages : []);
+        } catch (err) {
+          console.error("Failed to fetch chat", err);
+          setMessages([]);
+        }
+      }
+    }
+    loadChatMessages();
+  }, [currentChatId]);
+  
+  if (!authChecked) {
+    return (
+      <main>
+        <div className="center-container">
+          <p>Checking login status...</p>
+        </div>
+      </main>
+    );
+  }
+
+  if (!isLoggedIn) {
+    return (
+      <main>
+        <div className="center-container">
+          <p>You must log in to use/view this feature.</p>
+        </div>
+      </main>
+    );
+  }
+
+  const handleNewMessage = async (msg) => {
     setMessages((prev) => [...prev, msg]);
-    addMessageToChat(currentChatId, msg);
+    try {
+      await addMessageToChat(currentChatId, msg);
+    } catch (err) {
+      console.error("Failed to add message", err);
+    }
   };
 
-  const handleNewChat = () => {
-    const newChat = createNewChat();
-    setChats([newChat, ...chats]);
-    setCurrentChatId(newChat.id);
-    setMessages([]);
+  const handleNewChat = async () => {
+    try {
+      const newChat = await createNewChat();
+      setChats([newChat, ...chats]);
+      setCurrentChatId(newChat.id);
+      setMessages([]);
+    } catch (err) {
+      console.error("Failed to create new chat", err);
+    }
   };
 
   return (

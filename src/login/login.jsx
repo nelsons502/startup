@@ -8,13 +8,21 @@ export default function LoginWrapper() {
   const [authState, setAuthState] = useState(AuthState.Unknown);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("username");
-    if (storedUser) {
-      setUserName(storedUser);
-      setAuthState(AuthState.Authenticated);
-    } else {
-      setAuthState(AuthState.Unauthenticated);
+    async function checkUser() {
+      try {
+        const res = await fetch('/api/user/me', { credentials: 'include' });
+        if (res.ok) {
+          const data = await res.json();
+          setUserName(data.email);
+          setAuthState(AuthState.Authenticated);
+        } else {
+          setAuthState(AuthState.Unauthenticated);
+        }
+      } catch {
+        setAuthState(AuthState.Unauthenticated);
+      }
     }
+    checkUser();
   }, []);
 
   function handleAuthChange(name, newState) {
@@ -22,14 +30,8 @@ export default function LoginWrapper() {
     setAuthState(newState);
     setTimeout(() => {
       window.dispatchEvent(new Event("authChange"));
+      window.location.href = "/";
     }, 100);
-    if (newState === AuthState.Unauthenticated) {
-      localStorage.removeItem("username");
-    } else {
-      localStorage.setItem("username", name);
-    }
-    window.dispatchEvent(new Event("authChange"));
-    window.location.href = "/";
   }
 
   return (

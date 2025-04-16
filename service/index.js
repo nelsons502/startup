@@ -11,17 +11,58 @@ app.use(express.static('public'));
 
 const authCookieName = 'token';
 // include default values for the users, posts, and chats arrays
-let users = [{email: "bruce@wayne.com", password: "darkknight", token: "robin"}];
+let users = [{email: "bruce@wayne.com", password: bcrypt.hashSync("darkknight", 10), token: "robin"}];
 let posts = [
-  {
-    id: '1',
-    title: 'First Post',
-    content: 'This is the first post',
-    code: 'print("Hello, World!")',
-    type: 'python',
-    timestamp: '2023-10-01T12:00:00Z',
-    likes: 0,
-  }
+    {
+        id: 1,
+        title: "Post Title 1",
+        content: "Content of the post goes here...",
+        timestamp: "2025-02-12 10:30 AM",
+        likes: 0,
+        likedBy: [],
+        code: "# This is dummy code\nprint('Hello, World!')",
+        type: "python",
+      },
+      {
+        id: 2,
+        title: "Post Title 2",
+        content: "Another example post content here...",
+        timestamp: "2025-02-13 11:00 AM",
+        likes: 0,
+        likedBy: [],
+        code: "// This is dummy code\nconsole.log('Hello, World!');",
+        type: "javascript",
+      },
+      {
+        id: 3,
+        title: "Post Title 3",
+        content: "Third post sample with simple content.",
+        timestamp: "2025-02-14 09:15 AM",
+        likes: 0,
+        likedBy: [],
+        code: '// This is dummy code\nclass Main {\n\tpublic static void main() {\nSystem.out.println("Hello, World!");\n}\n}',
+        type: "java",
+      },
+      {
+        id: 4,
+        title: "Post Title 4",
+        content: "More placeholder text for demonstration.",
+        timestamp: "2025-02-15 08:45 AM",
+        likes: 0,
+        likedBy: [],
+        code: '// This is dummy code\n#include <iostream>\nusing namespace std;\nint main() {\ncout << "Hello, World!";\nreturn 0;\n}',
+        type: "c++",
+      },
+      {
+        id: 5,
+        title: "Post Title 5",
+        content: "Yet another post with fake data.",
+        timestamp: "2025-02-16 03:20 PM",
+        likes: 0,
+        likedBy: [],
+        code: "# This is dummy code\nprint('Hello, World!')",
+        type: "python",
+      }
 ];
 let chats = [
   {
@@ -81,7 +122,18 @@ app.get('/api/user/me', async (req, res) => {
 /* ========= POSTS ========= */
 
 // Get all posts
-app.get('/api/posts', verifyAuth, (_req, res) => res.send(posts));
+app.get('/api/posts', verifyAuth, (req, res) => {
+  const token = req.cookies[authCookieName];
+  const user = users.find(u => u.token === token);
+  const email = user?.email;
+
+  const enrichedPosts = posts.map(post => ({
+    ...post,
+    likedByUser: post.likedBy.includes(email)
+  }));
+
+  res.send(enrichedPosts);
+});
 
 // Create a new post
 app.post('/api/posts', verifyAuth, (req, res) => {
@@ -89,6 +141,7 @@ app.post('/api/posts', verifyAuth, (req, res) => {
     id: uuid.v4(),
     title: req.body.title,
     content: req.body.content,
+    likedBy: [],
     code: req.body.code,
     type: req.body.type,
     timestamp: new Date().toISOString(),
@@ -102,7 +155,12 @@ app.post('/api/posts', verifyAuth, (req, res) => {
 app.post('/api/posts/:id/like', verifyAuth, (req, res) => {
   const post = posts.find(p => p.id === req.params.id);
   if (post) {
-    post.likes++;
+    const token = req.cookies[authCookieName];
+    const user = users.find(u => u.token === token);
+    if (!post.likedBy.includes(user.email)) {
+      post.likedBy.push(user.email);
+      post.likes++;
+    }
     res.send({ likes: post.likes });
   } else {
     res.status(404).send({ msg: 'Post not found' });
@@ -118,6 +176,18 @@ app.get('/api/posts/:id/download', verifyAuth, (req, res) => {
   res.setHeader('Content-disposition', `attachment; filename=${filename}`);
   res.setHeader('Content-Type', 'text/plain');
   res.send(post.code);
+});
+
+// Get single post
+app.get('/api/posts/:id', verifyAuth, (req, res) => {
+  const post = posts.find(p => p.id === req.params.id);
+  if (!post) return res.status(404).send({ msg: 'Post not found' });
+
+  const token = req.cookies[authCookieName];
+  const user = users.find(u => u.token === token);
+  const likedByUser = post.likedBy.includes(user.email);
+
+  res.send({ ...post, likedByUser });
 });
 
 /* ========= CHATS ========= */

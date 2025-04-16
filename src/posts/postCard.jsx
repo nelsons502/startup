@@ -1,30 +1,21 @@
-// reusable component for rendering each post
-
 // postCard.jsx
-import React, { useState, useEffect } from "react";
-import { likePost, hasUserLiked, downloadPost } from "./postsService";
+import React, { useState } from "react";
+import { likePost, downloadPost } from "./postsService";
 
 export default function PostCard({ post }) {
   const [likes, setLikes] = useState(post.likes || 0);
-  const [liked, setLiked] = useState(false);
 
-  useEffect(() => {
-    if (hasUserLiked(post.id)) {
-      setLiked(true);
-      setLikes(1); // simulate initial liked valueß
-    }
-  }, [post.id]);
-
-  const handleLike = () => {
-    if (!liked && likePost(post.id)) {
-      setLikes(likes + 1);
-      setLiked(true);
+  const handleLike = async () => {
+    try {
+      const updatedLikes = await likePost(post.id);
+      setLikes(updatedLikes);
+    } catch (err) {
+      console.error("Failed to like post", err);
     }
   };
 
   const handleDownload = () => {
     downloadPost(post.id);
-    // Optionally, you can show a notification or alert that the download has started
     alert(`Downloading ${post.title}...`);
   };
 

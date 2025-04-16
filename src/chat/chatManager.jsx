@@ -1,25 +1,50 @@
 import { Chat } from "./chatClass";
 
-const CHAT_STORAGE_KEY = "focus_coding_chats";
-
-function loadChats() {
-  const stored = localStorage.getItem(CHAT_STORAGE_KEY);
-  return stored ? JSON.parse(stored) : [];
+export async function getChats() {
+  const res = await fetch('/api/chats', {
+    credentials: 'include',
+  });
+  if (!res.ok) {
+    throw new Error('Failed to fetch chats');
+  }
+  return await res.json();
 }
 
-function saveChats(chats) {
-  localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(chats));
+export async function getChatById(chatId) {
+  const res = await fetch(`/api/chats/${chatId}`, {
+    credentials: 'include',
+  });
+  if (!res.ok) {
+    throw new Error('Failed to fetch chat');
+  }
+  return await res.json();
 }
 
-export function getChats() {
-  return loadChats();
+export async function createNewChat() {
+  const res = await fetch('/api/chats', {
+    method: 'POST',
+    credentials: 'include',
+  });
+  if (!res.ok) {
+    throw new Error('Failed to create new chat');
+  }
+  return await res.json();
 }
 
-export function getChatById(chatId) {
-  const chats = loadChats();
-  return chats.find(chat => chat.id === chatId);
+export async function addMessageToChat(chatId, message) {
+  const res = await fetch(`/api/chats/${chatId}/message`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify(message),
+  });
+  if (!res.ok) {
+    throw new Error('Failed to add message to chat');
+  }
+  return await res.json();
 }
 
+/*
 export function createNewChat() {
   const chats = loadChats();
   const num = chats.length + 1;
@@ -46,3 +71,4 @@ export function addMessageToChat(chatId, message) {
 
   saveChats(chats);
 }
+  */

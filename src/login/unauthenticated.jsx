@@ -4,9 +4,23 @@ export function Unauthenticated({ userName, onLogin }) {
   const [username, setUsername] = useState(userName || "");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    localStorage.setItem("username", username);
-    onLogin(username);
+  const handleLogin = async () => {
+    try {
+      const res = await fetch('/api/auth', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ email: username, password }),
+      });
+      if (res.ok) {
+        onLogin(username);
+      } else {
+        alert('Login failed');
+      }
+    } catch (err) {
+      console.error('Login error:', err);
+      alert('Login error');
+    }
   };
 
   return (
