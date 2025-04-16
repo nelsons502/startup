@@ -8,21 +8,32 @@ export default function LoginWrapper() {
   const [authState, setAuthState] = useState(AuthState.Unknown);
 
   useEffect(() => {
+    let isMounted = true;
+
     async function checkUser() {
       try {
         const res = await fetch('/api/user/me', { credentials: 'include' });
+        if (!isMounted) return;
+
         if (res.ok) {
           const data = await res.json();
           setUserName(data.email);
           setAuthState(AuthState.Authenticated);
         } else {
+          console.warn("User not authenticated:", res.status);
           setAuthState(AuthState.Unauthenticated);
         }
-      } catch {
-        setAuthState(AuthState.Unauthenticated);
+      } catch (error) {
+        console.error("Failed to fetch user info", error);
+        if (isMounted) setAuthState(AuthState.Unauthenticated);
       }
     }
+
     checkUser();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   function handleAuthChange(name, newState) {

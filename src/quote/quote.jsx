@@ -5,19 +5,17 @@ export default function Quote() {
     const [quote, setQuote] = useState("Loading inspirational quote...");
     const [author, setAuthor] = useState("");
 
-    useEffect(() => {
+    /*useEffect(() => {
         async function checkLogin() {
             try {
                 const res = await fetch("/api/user/me", { credentials: "include" });
                 setIsLoggedIn(res.ok);
             } catch {
                 setIsLoggedIn(false);
-            } finally {
-                setAuthChecked(true);
             }
         }
         checkLogin();
-    }, []);
+    }, []);*/
 
     const getNewQuote = async () => {
         setQuote("Loading inspirational quote...");

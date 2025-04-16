@@ -11,19 +11,27 @@ export default function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
+        let isMounted = true;
+
         const checkLogin = async () => {
             try {
                 const res = await fetch('/api/user/me', { credentials: 'include' });
-                setIsLoggedIn(res.ok);
-            } catch {
-                setIsLoggedIn(false);
+                if (isMounted) {
+                    setIsLoggedIn(res.ok);
+                }
+            } catch (err) {
+                console.error('Error checking login status:', err);
+                if (isMounted) {
+                    setIsLoggedIn(false);
+                }
             }
         };
-    
+
         checkLogin(); // initial load
         window.addEventListener("authChange", checkLogin);
-    
+
         return () => {
+            isMounted = false;
             window.removeEventListener("authChange", checkLogin);
         };
     }, []);
