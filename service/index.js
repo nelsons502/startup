@@ -236,7 +236,6 @@ app.post('/api/chats', verifyAuth, (req, res) => {
 
 // Add message to chat
 app.post('/api/chats/:id/message', verifyAuth, (req, res) => {
-  console.log(req.body);
   const chat = chats.find(c => c.id === req.params.id);
   if (!chat) return res.status(404).send({ msg: 'Chat not found' });
 
