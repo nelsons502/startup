@@ -101,3 +101,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 - [x] **Stores data in MongoDB** - Chats, and Posts stored in MongoDB from `service/database.js`. Chats are visible to the user who created them, and posts are visible to all users.
 - [x] **Stores credentials in MongoDB** - Auth stored in MongoDB from `service/database.js`. This was probably the trickest part for some reason haha. But it works really well now!
+
+## Websocket Deliverable
+
+Did not complete. Excited to continue working on the website for myself!
+Thanks for everything!

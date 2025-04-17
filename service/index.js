@@ -290,4 +290,7 @@ function extByType(type) {
   }
 }
 
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+const httpServer = app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+const { peerProxy } = require('./peerProxy.js');
+peerProxy(httpServer);
+console.log('Peer proxy started');
