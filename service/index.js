@@ -44,10 +44,10 @@ router.post('/auth/register', async (req, res) => {
 // Login
 router.put('/auth/login', async (req, res) => {
   const { email, password } = req.body;
-  const user = await getUser('email', email);
+  const user = await DB.getUser(email);
   if (user && await bcrypt.compare(password, user.password)) {
     user.token = uuid.v4();
-    await DB.updateUser(user); // make sure to update DB
+    await DB.updateUserToken(user); // make sure to update DB
     setAuthCookie(res, user);
     return res.send({ email: user.email });
   }
@@ -59,8 +59,8 @@ router.delete('/auth/logout', async (req, res) => {
   const token = req.cookies[authCookieName];
   const user = await DB.getUserByToken(token);
   if (user) {
-    delete user.token;
-    await DB.updateUser(user); // make sure to update DB
+    user.token = null;
+    await DB.updateUserToken(user); // make sure to update DB
   }
   res.clearCookie(authCookieName);
   res.status(204).end();

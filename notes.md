@@ -53,3 +53,9 @@ I learned a ton about Express and Node.js! Just as I was starting to really like
 I'm about to deploy my server to the internet. I pray everything goes smootly with that. 
 
 Wow, that took much longer than I thought! I had to really get down into the dirt with my code and take away anything that wasn't absolutely necessary! It works now though! (If imperfectly.)
+
+Thankfully, the DataBase deliverable was actually pretty straightforward! And my website actually feels like a realy website now!!! :D
+
+Being able to permanently store information is a real game changer for Web Apps. There is a lot that still want to do with my site. For example, some of the information loads slow, the color scheme is a bit too dark, the chats don't track context within a conversation (although I tried to get that working...). I will continue working on this site for a while after the course is over. I even made sure to fork the github repo that has all the course instruction so I can go back through it in even more detail and really hone my web dev skill. 
+
+I love that the internet gives everyone access to great knowledge and resources! It truly is a latter-day marvel. Excited to learn about Web Sockets!

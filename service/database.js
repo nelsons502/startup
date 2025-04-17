@@ -32,7 +32,7 @@ function addUser(user) {
   return userCollection.insertOne(user);
 }
 
-function updateUser(user) {
+function updateUserToken(user) {
   return userCollection.updateOne({ email: user.email }, { $set: user });
 }
 
@@ -95,7 +95,7 @@ module.exports = {
   getUser,
   getUserByToken,
   addUser,
-  updateUser,
+  updateUserToken,
   getAllPosts,
   getPostById,
   addPost,

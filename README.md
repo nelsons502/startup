@@ -94,3 +94,10 @@ For this deliverable I did the following.
 - [x] **Backend service endpoints** - Simple endpoints in `service/index.js` for auth, chat, posts, quote.
 - [x] **Frontend calls service endpoints** - All mocked functionality removed from the frontend and replaced with calls to the service.
 - [x] **Supports registration, login, logout, and restricted endpoint** - Fully support authentication and restrict access to chat and posts (sensitive info).
+
+## DB/Login deliverable
+
+For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
+
+- [x] **Stores data in MongoDB** - Chats, and Posts stored in MongoDB from `service/database.js`. Chats are visible to the user who created them, and posts are visible to all users.
+- [x] **Stores credentials in MongoDB** - Auth stored in MongoDB from `service/database.js`. This was probably the trickest part for some reason haha. But it works really well now!
