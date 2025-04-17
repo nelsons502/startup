@@ -68,8 +68,15 @@ export default function Posts() {
                     >
                         <option value="python">Python</option>
                         <option value="javascript">JavaScript</option>
+                        <option value="typescript">TypeScript</option>
                         <option value="java">Java</option>
                         <option value="c++">C++</option>
+                        <option value="c#">C#</option>
+                        <option value="markdown">Markdown</option>
+                        <option value="html">HTML</option>
+                        <option value="css">CSS</option>
+                        <option value="json">JSON</option>
+                        <option value="txt">Plaintext</option>
                     </select>
                     <textarea
                         placeholder="Code"

@@ -16,27 +16,24 @@ export default function Chat() {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    async function fetchUser() {
+    async function fetchUserEmail() {
       try {
-        const res = await fetch('/api/user/me', { credentials: 'include' });
+        const res = await fetch("/api/user/me", { credentials: "include" });
         if (res.ok) {
           const data = await res.json();
           setUserEmail(data.email);
-        } else {
-          console.error('Unauthorized access or user not logged in');
         }
       } catch (err) {
-        console.error('Error fetching user info:', err);
+        console.error("Failed to get user email", err);
       }
     }
-    fetchUser();
+    fetchUserEmail();
   }, []);
 
   useEffect(() => {
     async function loadChats() {
       try {
-        const loadedChats = await getChats();
-        const userChats = loadedChats.filter(chat => chat.owner === userEmail);
+        const userChats = await getChats();
         setChats(userChats);
         if (userChats.length > 0) {
           setCurrentChatId(userChats[0].id);
@@ -77,7 +74,7 @@ export default function Chat() {
 
   const handleNewChat = async () => {
     try {
-      const newChat = await createNewChat(userEmail);
+      const newChat = await createNewChat();
       setChats([newChat, ...chats]);
       setCurrentChatId(newChat.id);
       setMessages([]);
@@ -115,7 +112,7 @@ export default function Chat() {
             </p>
           ))}
         </div>
-        <ChatBox onNewMessage={handleNewMessage} chatId={currentChatId} />
+        <ChatBox onSendMessage={handleNewMessage} messages={messages} />
       </div>
     </main>
   );

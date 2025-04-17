@@ -6,32 +6,52 @@ export function Unauthenticated({ userName, onLogin }) {
   const [displayError, setDisplayError] = React.useState(null);
 
   async function loginUser() {
-    loginOrCreate(`/api/auth/login`);
-  }
-
-  async function registerUser() {
-    loginOrCreate(`/api/auth/register`);
-  }
-  async function loginOrCreate(endpoint) {
-    console.log("loginOrCreate", endpoint);
-    const response = await fetch(endpoint, {
-      // "put" for login, "post" for register
-      method: endpoint.includes("login") ? "put" : "post",
-      body: JSON.stringify({ email: username, password: password }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-      credentials: "include",
-    });
-    if (response?.status === 200) {
-      localStorage.setItem("userName", username);
-      onLogin(username);
-    } else {
-      const body = await response.json();
-      setDisplayError(`⚠ Error: ${body.msg}`);
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "PUT",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+        body: JSON.stringify({ email: username, password }),
+        credentials: "include",
+      });
+  
+      if (response.ok) {
+        localStorage.setItem("userName", username);
+        onLogin(username);
+      } else {
+        const body = await response.json();
+        setDisplayError(`⚠ Error: ${body.msg}`);
+      }
+    } catch (err) {
+      console.error("Login error:", err);
+      setDisplayError("⚠ Error: Login failed.");
     }
   }
-
+  
+  async function registerUser() {
+    try {
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+        body: JSON.stringify({ email: username, password }),
+        credentials: "include",
+      });
+  
+      if (response.ok) {
+        localStorage.setItem("userName", username);
+        onLogin(username);
+      } else {
+        const body = await response.json();
+        setDisplayError(`⚠ Error: ${body.msg}`);
+      }
+    } catch (err) {
+      console.error("Register error:", err);
+      setDisplayError("⚠ Error: Registration failed.");
+    }
+  }
   return (
     <div className="center-container">
       <h2>Please Log In</h2>

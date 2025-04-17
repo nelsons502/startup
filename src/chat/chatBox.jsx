@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { sendMessageToAI } from "./chatService";
 
-export default function ChatBox({ onNewMessage }) {
+export default function ChatBox({ onSendMessage, messages }) {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -9,15 +9,15 @@ export default function ChatBox({ onNewMessage }) {
     if (!input.trim()) return;
 
     const userMessage = { role: "user", content: input };
-    onNewMessage(userMessage);
+    onSendMessage(userMessage);
 
     setLoading(true);
     setInput("");
-    const aiReply = await sendMessageToAI([userMessage]);
+    const aiReply = await sendMessageToAI([...messages, userMessage]);
     setLoading(false);
 
     const aiMessage = { role: "assistant", content: aiReply };
-    onNewMessage(aiMessage);
+    onSendMessage(aiMessage);
   };
 
   return (
@@ -33,13 +33,13 @@ export default function ChatBox({ onNewMessage }) {
             handleSend();
           }
         }}
-        />
-        <button onClick={handleSend} disabled={loading}>
-            {loading ? "..." : "Send"}
-        </button>
-        <div className="loading-indicator">
-            {loading && <span>Loading...</span>}
-        </div>
+      />
+      <button onClick={handleSend} disabled={loading}>
+        {loading ? "..." : "Send"}
+      </button>
+      <div className="loading-indicator">
+        {loading && <span>Loading...</span>}
+      </div>
     </div>
   );
 }

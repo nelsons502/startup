@@ -19,9 +19,20 @@ app.use('/api', router);
 
 /* ========= AUTH ========= */
 
+// Get the current user from their auth token
+router.get('/user/me', async (req, res) => {
+  const token = req.cookies[authCookieName];
+  const user = await DB.getUserByToken(token);
+  if (user) {
+    res.send({ email: user.email });
+  } else {
+    res.status(401).send({ msg: 'Unauthorized' });
+  }
+});
+
 // Register
 router.post('/auth/register', async (req, res) => {
-  if (await getUser('email', req.body.email)) {
+  if (await DB.getUser(req.body.email)) {
     return res.status(409).send({ msg: 'Existing user' });
   } else {
     const user = await createUser(req.body.email, req.body.password);
@@ -46,7 +57,7 @@ router.put('/auth/login', async (req, res) => {
 // Logout
 router.delete('/auth/logout', async (req, res) => {
   const token = req.cookies[authCookieName];
-  const user = await getUser('token', token);
+  const user = await DB.getUserByToken(token);
   if (user) {
     delete user.token;
     await DB.updateUser(user); // make sure to update DB
@@ -58,15 +69,14 @@ router.delete('/auth/logout', async (req, res) => {
 /* ========= POSTS ========= */
 
 // Get all posts
-router.get('/posts', verifyAuth, (req, res) => {
-  console.log('getting all posts, server');
-  const posts = DB.getAllPosts();
+router.get('/posts', verifyAuth, async (req, res) => {
+  const posts = await DB.getAllPosts();
   if (!posts) return res.status(404).send({ msg: 'Posts not found' });
   res.send(posts); // any logged-in user can see all posts
 });
 
 // Create a new post
-router.post('/posts', verifyAuth, (req, res) => {
+router.post('/posts', verifyAuth, async (req, res) => {
   const post = {
     id: uuid.v4(),
     title: req.body.title,
@@ -78,46 +88,42 @@ router.post('/posts', verifyAuth, (req, res) => {
     likes: 0,
     owner: req.body.owner,
   };
-  DB.addPost(post);
+  await DB.addPost(post);
   res.send(post);
 });
 
 // Like a post
-router.post('/posts/:id/like', verifyAuth, (req, res) => {
-  const post = DB.getPostById(req.params.id);
+router.post('/posts/:id/like', verifyAuth, async (req, res) => {
+  const post = await DB.getPostById(req.params.id);
   if (post) {
     const token = req.cookies[authCookieName];
-    const user = DB.getUserByToken(token);
+    const user = await DB.getUserByToken(token);
     if (!user) return res.status(401).send({ msg: 'Unauthorized' });
     // if user is already in likedBy, do not increase likes
-    if (!post.likedBy.includes(user.email)) { // user can "like" only once
-        post.likedBy.push(user.email);
-        post.likes++;
-    }
-    res.send({ likes: post.likes });
-  } else {
-    res.status(404).send({ msg: 'Post not found' });
-  }
+    await DB.likePost(req.params.id, user.email);
+    const updated = await DB.getPostById(req.params.id);
+    res.send({ likes: updated.likes });
+
+  } else {res.status(404).send({ msg: 'Post not found' });}
 });
 
 // Download post code
-router.get('/posts/:id/download', verifyAuth, (req, res) => {
-  const post = DB.getPostById(req.params.id);
+router.get('/posts/:id/download', verifyAuth, async (req, res) => {
+  const post = await DB.getPostById(req.params.id);
   if (!post) return res.status(404).send({ msg: 'Post not found' });
 
   const filename = `${post.title.toLowerCase().replace(/\s+/g, '_')}.${extByType(post.type)}`;
-  res.setHeader('Content-disposition', `attachment; filename=${filename}`);
-  res.setHeader('Content-Type', 'text/plain');
-  res.send({ code: post.code, filename: filename });
+  res.attachment(filename);
+  res.send(post.code);
 });
 
 // Get single post
-router.get('/posts/:id', verifyAuth, (req, res) => {
-  const post = DB.getPostById(req.params.id);
+router.get('/posts/:id', verifyAuth, async (req, res) => {
+  const post = await DB.getPostById(req.params.id);
   if (!post) return res.status(404).send({ msg: 'Post not found' });
 
   const token = req.cookies[authCookieName];
-  const user = DB.getUserByToken(token);
+  const user = await DB.getUserByToken(token);
   if (!user) return res.status(401).send({ msg: 'Unauthorized' });
   // if owner, user can see all details
   if (post.owner === user.email) return res.send(post);
@@ -129,10 +135,13 @@ router.get('/posts/:id', verifyAuth, (req, res) => {
 /* ========= CHATS ========= */
 
 // Get all chats by user
-router.get('/chats', verifyAuth, (req, res) => {
+router.get('/chats', verifyAuth, async (req, res) => {
+  console.log('getting all chats for the current user, server');
   const token = req.cookies[authCookieName];
-  const user = DB.getUserByToken(token);
-  const userChats = DB.getChatsByUser(user.email);
+  const user = await DB.getUserByToken(token);
+  if (!user) return res.status(401).send({ msg: 'Unauthorized' });
+
+  const userChats = await DB.getChatsByUser(user.email);
   if (!userChats) return res.status(404).send({ msg: 'Chats not found' });
   // sort chats by updatedAt
   userChats.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
@@ -142,25 +151,23 @@ router.get('/chats', verifyAuth, (req, res) => {
 });
 
 // Get single chat
-router.get('/chats/:id', verifyAuth, (req, res) => {
-  const chat = DB.getChatById(req.params.id);
+router.get('/chats/:id', verifyAuth, async (req, res) => {
+  const chat = await DB.getChatById(req.params.id);
   if (!chat) return res.status(404).send({ msg: 'Chat not found' });
   // if owner, user can see all details
   const token = req.cookies[authCookieName];
-  const user = DB.getUserByToken(token);
+  const user = await DB.getUserByToken(token);
   if (chat.owner === user.email) return res.send(chat);
   // if not owner, user can only see title, messages, createdAt, updatedAt
   return res.status(403).send({ msg: 'Forbidden' });
 });
 
 // Create new chat
-router.post('/chats', verifyAuth, (req, res) => {
+router.post('/chats', verifyAuth, async (req, res) => {
   const token = req.cookies[authCookieName];
-  const user = DB.getUserByToken(token);
+  const user = await DB.getUserByToken(token);
   if (!user) return res.status(401).send({ msg: 'Unauthorized' });
-  // if user is not owner, do not create chat
-  if (user.email !== req.body.owner) return res.status(403).send({ msg: 'Forbidden' });
-  // if user is owner, create chat
+
   const chat = {
     id: uuid.v4(),
     title: req.body.title || "New Chat",
@@ -169,39 +176,39 @@ router.post('/chats', verifyAuth, (req, res) => {
     updatedAt: new Date().toISOString(),
     owner: user.email
   };
-  DB.addChat(chat);
+  await DB.addChat(chat);
   res.send(chat);
 });
 
 // Change chat title
-router.put('/chats/:id/title', verifyAuth, (req, res) => {
-    const chat = DB.getChatById(req.params.id);
+router.put('/chats/:id/title', verifyAuth, async (req, res) => {
+    const chat = await DB.getChatById(req.params.id);
     if (!chat) return res.status(404).send({ msg: 'Chat not found' });
     const token = req.cookies[authCookieName];
-    const user = DB.getUserByToken(token);
+    const user = await DB.getUserByToken(token);
     if (!user) return res.status(401).send({ msg: 'Unauthorized' });
     // if user is not owner, do not change title
     if (chat.owner !== user.email) return res.status(403).send({ msg: 'Forbidden' });
     // if user is owner, change title
     chat.title = req.body.title;
     chat.updatedAt = new Date().toISOString();
-    DB.updateChat(chat);
+    await DB.updateChat(chat);
     res.send(chat);
     }
 );
 
 // Delete chat
-router.delete('/chats/:id', verifyAuth, (req, res) => {
-  DB.deleteChat(req.params.id);
+router.delete('/chats/:id', verifyAuth, async (req, res) => {
+  await DB.deleteChat(req.params.id);
   res.status(204).end();
 });
 
 // Add message to chat
-router.post('/chats/:id/message', verifyAuth, (req, res) => {
-  const chat = DB.getChatById(req.params.id);
+router.post('/chats/:id/message', verifyAuth, async (req, res) => {
+  const chat = await DB.getChatById(req.params.id);
   if (!chat) return res.status(404).send({ msg: 'Chat not found' });
   const token = req.cookies[authCookieName];
-  const user = DB.getUserByToken(token);
+  const user = await DB.getUserByToken(token);
   if (!user) return res.status(401).send({ msg: 'Unauthorized' });
   // if user is not owner, do not add message
   if (chat.owner !== user.email) return res.status(403).send({ msg: 'Forbidden' });
@@ -214,7 +221,7 @@ router.post('/chats/:id/message', verifyAuth, (req, res) => {
 
   chat.messages.push(msg);
   chat.updatedAt = new Date().toISOString();
-  DB.updateChat(chat);
+  await DB.updateChat(chat);
   res.send(chat);
 });
 
@@ -246,9 +253,8 @@ app.use((_req, res) => {
 
 async function verifyAuth(req, res, next) {
   const token = req.cookies[authCookieName];
-  const user = await DB.getUserByToken(token);
-  req.user = user;
-  user ? next() : res.status(401).send({ msg: 'Unauthorized' });
+  req.user = await DB.getUserByToken(token);
+  req.user ? next() : res.status(401).send({ msg: 'Unauthorized' });
 }
 
 async function createUser(email, password) {
@@ -256,13 +262,6 @@ async function createUser(email, password) {
   const user = { email, password: passwordHash, token: uuid.v4() };
   await DB.addUser(user);
   return user;
-}
-
-async function getUser(field, value) {
-  if (!value) return null;
-  return field === 'token' 
-    ? DB.getUserByToken(value) 
-    : DB.getUser(value);
 }
 
 function setAuthCookie(res, user) {
@@ -278,8 +277,15 @@ function extByType(type) {
   switch (type) {
     case 'python': return 'py';
     case 'javascript': return 'js';
+    case 'typescript': return 'ts';
     case 'java': return 'java';
     case 'c++': return 'cpp';
+    case 'c#': return 'cs';
+    case 'markdown': return 'md';
+    case 'html': return 'html';
+    case 'css': return 'css';
+    case 'json': return 'json';
+    case 'txt': return 'txt';
     default: return 'txt';
   }
 }

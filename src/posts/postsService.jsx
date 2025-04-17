@@ -28,12 +28,11 @@ export async function downloadPost(postId) {
     });
     if (!res.ok) return;
 
-    const postInfo = await res.json();
-    //console.log("Post info:", postInfo);
+    const blob = await res.blob();
+    const contentDisposition = res.headers.get("Content-Disposition");
+    const match = contentDisposition && contentDisposition.match(/filename="?(.+)"?/);
+    const fileName = match ? match[1] : `post_${postId}.txt`;
 
-    const fileName = postInfo.filename;
-
-    const blob = new Blob([postInfo.code], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
 
     const link = document.createElement("a");
