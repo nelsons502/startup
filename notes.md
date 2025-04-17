@@ -59,3 +59,5 @@ Thankfully, the DataBase deliverable was actually pretty straightforward! And my
 Being able to permanently store information is a real game changer for Web Apps. There is a lot that still want to do with my site. For example, some of the information loads slow, the color scheme is a bit too dark, the chats don't track context within a conversation (although I tried to get that working...). I will continue working on this site for a while after the course is over. I even made sure to fork the github repo that has all the course instruction so I can go back through it in even more detail and really hone my web dev skill. 
 
 I love that the internet gives everyone access to great knowledge and resources! It truly is a latter-day marvel. Excited to learn about Web Sockets!
+
+Simon is fully deployed to my environment! Working on the Websocket was something I was looking foward to, but I ran out of steam tonight. I ***WILL*** continue working on this project now that the class is over. I just need to sleep before I can make it awesome!
